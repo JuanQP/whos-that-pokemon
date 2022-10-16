@@ -6,6 +6,10 @@ import { pickOptions, pickRandomPokemon } from './utils';
 
 const DELAY=2000;
 
+function getImageSrc(pokemon) {
+  return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`;
+}
+
 function App() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [randomPokemon, setRandomPokemon] = useState(null);
@@ -62,7 +66,7 @@ function App() {
               <Card.Section>
                 <Image
                   className={selected ? 'image-selected-option' : 'image-waiting-option'}
-                  src={randomPokemon.imageSrc}
+                  src={getImageSrc(randomPokemon)}
                   alt="Pokemon"
                   height={192}
                   fit="contain"
