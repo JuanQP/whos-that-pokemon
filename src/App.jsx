@@ -28,6 +28,7 @@ function App() {
   }
 
   function handlePokemonOptionClick(selectedPokemon) {
+    if(selected) return;
     if(selectedPokemon.id === randomPokemon.id) {
       setSuccessCount(previous => previous + 1);
     }
@@ -81,6 +82,7 @@ function App() {
                 fullWidth
                 uppercase
                 size="md"
+                disabled={selected && option.id !== selected.id && option.id !== randomPokemon.id}
                 variant={selected?.id === option.id || (selected && option.id === randomPokemon.id) ? 'filled' : 'outline'}
                 color={selected && randomPokemon.id === option.id ? 'green' :
                   selected?.id === option.id ? 'red' : undefined
