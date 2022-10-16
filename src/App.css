@@ -1,0 +1,13 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+
+.image-waiting-option {
+  filter: brightness(0);
+}
+
+.image-selected-option {
+  filter: brightness(1);
+  transition: filter 0.3s ease-in-out;
+}
