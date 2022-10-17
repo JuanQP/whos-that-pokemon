@@ -47,23 +47,24 @@ function App() {
         <Grid.Col xs={12}>
           <Title>Who's that Pokémon?</Title>
         </Grid.Col>
-        <Grid.Col xs={12}>
-          <Text>{successCount} wins</Text>
-        </Grid.Col>
-        <Grid.Col xs={12}>
+        <Grid.Col xs={6}>
           <Button
-            variant="filled"
+            fullWidth
+            variant="subtle"
             disabled={isPlaying}
             onClick={handleNextPokemonClick}
           >
             {isPlaying ? "Already playing!" : "Play"}
           </Button>
         </Grid.Col>
+        <Grid.Col xs={6} sx={{display: 'flex', justifyContent:'center', alignItems: 'center'}}>
+          <Text align='center'>{successCount} wins</Text>
+        </Grid.Col>
         {isPlaying && (
         <>
           <Grid.Col xs={0} md={3} />
           <Grid.Col xs={12} md={6}>
-            <Card shadow="sm">
+            <Card shadow="sm" withBorder>
               <Card.Section>
                 <Image
                   className={selected ? 'image-selected-option' : 'image-waiting-option'}
@@ -77,15 +78,17 @@ function App() {
           </Grid.Col>
           <Grid.Col xs={0} md={3} />
           {options.map(option => (
-            <Grid.Col key={option.id} xs={12} md={6}>
+            <Grid.Col key={option.id} xs={12} sm={6}>
               <Button
                 fullWidth
                 uppercase
                 size="md"
+                radius="xs"
+                sx={{ borderWidth: 3 }}
                 disabled={selected && option.id !== selected.id && option.id !== randomPokemon.id}
                 variant={selected?.id === option.id || (selected && option.id === randomPokemon.id) ? 'filled' : 'outline'}
                 color={selected && randomPokemon.id === option.id ? 'green' :
-                  selected?.id === option.id ? 'red' : undefined
+                  selected?.id === option.id ? 'red' : 'dark'
                 }
                 onClick={() => handlePokemonOptionClick(option)}
               >

@@ -1,6 +1,14 @@
 body {
   padding: 0;
   margin: 0;
+  background-color: #C3CFA1;
+}
+
+@font-face {
+  font-family: 'PokemonGb-RAeo';
+  src: local('PokemonGb-RAeo'), url(./assets/PokemonGb-RAeo.ttf) format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
 
 .image-waiting-option {
