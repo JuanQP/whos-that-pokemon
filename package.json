@@ -1,5 +1,6 @@
 {
   "name": "whos-that-pokemon",
+  "homepage": "https://github.com/JuanQP/whos-that-pokemon",
   "private": true,
   "version": "0.0.0",
   "type": "module",

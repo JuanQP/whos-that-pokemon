@@ -4,14 +4,14 @@ import { Home } from './Home';
 import { Game } from './Game';
 import { createContext, useState } from 'react';
 import {
-  createBrowserRouter,
+  createHashRouter,
   RouterProvider,
 } from "react-router-dom";
 import './App.css';
 import { IconDeviceGamepad, IconDeviceTvOld } from '@tabler/icons';
 import { About } from './About';
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: "/",
     element: <Home />,
@@ -24,7 +24,9 @@ const router = createBrowserRouter([
     path: "/about",
     element: <About />,
   },
-]);
+], {
+  basename: '/',
+});
 
 const gameboyTheme = {
   white: '#C3CFA1',
