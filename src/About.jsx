@@ -19,7 +19,7 @@ export function About() {
             How was this made?
           </Title>
           <Text>
-            The information I used in this game comes from the amazing webpage of <Anchor href="https://pokeapi.co" target="_blank">PokeAPI</Anchor> ❤️. I just grabbed the first 151 pokemons data and stored it in this project so it is not necessary to constantly use their API.
+            The information I used in this game comes from the amazing webpage of <Anchor underline href="https://pokeapi.co" target="_blank">PokeAPI</Anchor> ❤️. I just grabbed the first 151 pokemons data and stored it in this project so it is not necessary to constantly use their API.
           </Text>
           <SimpleGrid
             mt="sm"
