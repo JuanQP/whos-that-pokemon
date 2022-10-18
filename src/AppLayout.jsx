@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import './App.css';
 import { IconDeviceGamepad, IconDeviceTvOld } from '@tabler/icons';
+import { About } from './About';
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
   {
     path: "/play",
     element: <Game />,
+  },
+  {
+    path: "/about",
+    element: <About />,
   },
 ]);
 
@@ -82,7 +87,7 @@ const gameboyTheme = {
           boxShadow: '2px 2px black',
         }
       }
-    }
+    },
   }
 }
 

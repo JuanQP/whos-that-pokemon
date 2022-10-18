@@ -1,4 +1,4 @@
-import { pickOptions, pickRandomPokemon } from './utils';
+import { getImageSrc, pickOptions, pickRandomPokemon } from './utils';
 import pokemons from './assets/pokemons.json';
 import backgroundImage from './assets/whosthatpokemon.png'
 import { useContext, useRef, useState } from 'react';
@@ -8,10 +8,6 @@ import { context } from './AppLayout';
 import { OptionButton } from './components/OptionButton';
 
 const DELAY=2000;
-
-function getImageSrc(pokemon) {
-  return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`;
-}
 
 const INITIAL_POKEMON = pickRandomPokemon(pokemons, false);
 const INITIAL_OPTIONS = pickOptions(pokemons, INITIAL_POKEMON);

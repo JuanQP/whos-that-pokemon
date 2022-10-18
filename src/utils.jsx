@@ -1,3 +1,7 @@
+export function getImageSrc(pokemon) {
+  return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`;
+}
+
 export function randomNumber(from = 0, to = 0) {
   return from + Math.floor(Math.random() * to);
 }
