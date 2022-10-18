@@ -1,3 +1,8 @@
+/**
+ * Miliseconds in one second
+ */
+export const SECOND = 1000;
+
 export function getImageSrc(pokemon) {
   return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`;
 }

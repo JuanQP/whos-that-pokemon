@@ -1,27 +1,27 @@
 import { Button, Card, Grid, Image, Progress, Text } from "@mantine/core";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { getImageSrc, pickRandomPokemon } from "./utils";
+import { getImageSrc, pickRandomPokemon, SECOND } from "./utils";
 import pokemons from './assets/pokemons.json';
 import { IconBrandGithub, IconInfoCircle, IconPokeball, } from "@tabler/icons";
 
-const DELAY = 10000;
-const TICK = 1000;
+const NEXT_IMAGE_DELAY = 10 * SECOND;
+const TICK = SECOND;
 const INITIAL_POKEMON = pickRandomPokemon(pokemons, false);
 
 export function Home() {
 
   const [randomPokemon, setRandomPokemon] = useState(INITIAL_POKEMON);
-  const [timer, setTimer] = useState(DELAY); // Force fetch image on start
+  const [timer, setTimer] = useState(0);
   const timeout = useRef(null);
   const pokemonImageSrc = getImageSrc(randomPokemon);
 
   useEffect(() => {
-    // Clear timeout and jump to next pokemon in DELAY seconds.
+    // Clear timeout and jump to next pokemon in NEXT_IMAGE_DELAY miliseconds.
     clearTimeout(timeout.current)
     timeout.current = setTimeout(function() {
-      // If it has passed DELAY seconds, fetch a new image
-      if(timer >= DELAY) {
+      // If it has passed NEXT_IMAGE_DELAY miliseconds, fetch a new image
+      if(timer >= NEXT_IMAGE_DELAY) {
         const randomPokemon = pickRandomPokemon(pokemons, false);
         setRandomPokemon(randomPokemon);
         setTimer(0);
