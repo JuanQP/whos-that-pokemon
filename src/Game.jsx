@@ -1,9 +1,11 @@
 import { pickOptions, pickRandomPokemon } from './utils';
 import pokemons from './assets/pokemons.json';
-import { useRef, useState } from 'react';
+import backgroundImage from './assets/whosthatpokemon.png'
+import { useContext, useRef, useState } from 'react';
 import { Button, Card, Grid, Image, Text } from '@mantine/core';
-import AppLayout from './AppLayout';
 import { Link } from 'react-router-dom';
+import { context } from './AppLayout';
+import { OptionButton } from './components/OptionButton';
 
 const DELAY=2000;
 
@@ -22,6 +24,7 @@ export function Game() {
   const [options, setOptions] = useState(INITIAL_OPTIONS);
   const [successCount, setSuccessCount] = useState(0);
   const [remainingAttempts, setRemainingAttempts] = useState(TOTAL_ATTEMPTS);
+  const isUsingGameboyTheme = useContext(context);
   const timeout = useRef(null);
 
   function handleNextPokemonClick() {
@@ -52,63 +55,49 @@ export function Game() {
   }
 
   return (
-    <AppLayout>
-
-      <Grid>
-        <Grid.Col xs={12} sx={{display: 'flex', justifyContent:'center', alignItems: 'center'}}>
-          <Text align='center'>{successCount} wins</Text>
+    <Grid>
+      <Grid.Col xs={0} md={3} />
+      <Grid.Col xs={12} md={6}>
+        <Card withBorder>
+          <Card.Section
+            sx={ !isUsingGameboyTheme ? {
+            backgroundImage: `url('${backgroundImage}')`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            } : undefined }
+          >
+            <Image
+              className={selected ? 'image-selected-option' : 'image-waiting-option'}
+              src={getImageSrc(randomPokemon)}
+              alt="Pokemon"
+              height={192}
+              ml={isUsingGameboyTheme ? undefined : "xs"}
+              width={isUsingGameboyTheme ? undefined : 192}
+              fit="contain"
+            />
+          </Card.Section>
+        </Card>
+      </Grid.Col>
+      <Grid.Col xs={0} md={3} />
+      {options.map((option, index) => (
+        <Grid.Col key={option.id} xs={12} sm={6}>
+          <OptionButton
+            index={index}
+            pokemonOption={option}
+            randomPokemon={randomPokemon}
+            selectedPokemon={selected}
+            onClick={handlePokemonOptionClick}
+          />
         </Grid.Col>
-        <Grid.Col xs={0} md={3} />
-        <Grid.Col xs={12} md={6}>
-          <Card shadow="sm" withBorder>
-            <Card.Section>
-              <Image
-                className={selected ? 'image-selected-option' : 'image-waiting-option'}
-                src={getImageSrc(randomPokemon)}
-                alt="Pokemon"
-                height={192}
-                fit="contain"
-              />
-            </Card.Section>
-          </Card>
+      ))}
+      {remainingAttempts === 0 && (
+        <Grid.Col xs={12}>
+          <Text>Game finished! You've guessed {successCount} pokemons</Text>
+          <Button fullWidth component={Link} to="/">
+            Return to home
+          </Button>
         </Grid.Col>
-        <Grid.Col xs={0} md={3} />
-        {options.map(option => (
-          <Grid.Col key={option.id} xs={12} sm={6}>
-            <Button
-              fullWidth
-              uppercase
-              size="lg"
-              radius="xs"
-              disabled={selected && option.id !== selected.id && option.id !== randomPokemon.id}
-              variant={selected?.id === option.id || (selected && option.id === randomPokemon.id) ? 'filled' : 'outline'}
-              color={selected && randomPokemon.id === option.id ? 'green' :
-                selected?.id === option.id ? 'red' : 'dark'
-              }
-              onClick={() => handlePokemonOptionClick(option)}
-            >
-              {option.name}
-            </Button>
-          </Grid.Col>
-        ))}
-        {remainingAttempts === 0 && (
-          <Grid.Col xs={12}>
-            <Text>Game finished!</Text>
-            <Button
-              fullWidth
-              uppercase
-              size='md'
-              radius='xs'
-              color="dark"
-              variant='outline'
-              component={Link}
-              to="/"
-            >
-              Return to home
-            </Button>
-          </Grid.Col>
-        )}
-      </Grid>
-    </AppLayout>
+      )}
+    </Grid>
   )
 }
