@@ -1,7 +1,31 @@
+import { NormalModeFinishedGame } from "./components/NormalModeFinishedGame";
+import { PokemonMasterModeFinishedGame } from "./components/PokemonMasterModeFinishedGame";
+
 /**
  * Miliseconds in one second
  */
 export const SECOND = 1000;
+
+export const GAME_MODES = {
+  Normal: {
+    TIME_TO_CHOOSE: 5 * SECOND,
+    NEXT_POKEMON_DELAY: 3 * SECOND,
+    TOTAL_ATTEMPTS: 10,
+    GAME_OVER_ON_FAIL: false,
+    REMOVE_POKEMONS: false,
+    showListOnGameOver: true,
+    GameOverMessage: NormalModeFinishedGame,
+  },
+  PokemonMaster: {
+    TIME_TO_CHOOSE: 4 * SECOND,
+    NEXT_POKEMON_DELAY: 2 * SECOND,
+    TOTAL_ATTEMPTS: 151,
+    GAME_OVER_ON_FAIL: true,
+    REMOVE_POKEMONS: true,
+    showListOnGameOver: false,
+    GameOverMessage: PokemonMasterModeFinishedGame,
+  },
+}
 
 export function getImageSrc(pokemon) {
   return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`;

@@ -1,4 +1,4 @@
-import { Button, Card, Grid, Image, Progress, Text } from "@mantine/core";
+import { Button, Card, Grid, Image, Modal, Progress, Stack, Text } from "@mantine/core";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { getImageSrc, pickRandomPokemon, SECOND } from "./utils";
@@ -13,6 +13,7 @@ export function Home() {
 
   const [randomPokemon, setRandomPokemon] = useState(INITIAL_POKEMON);
   const [timer, setTimer] = useState(0);
+  const [opened, setOpened] = useState(false);
   const timeout = useRef(null);
   const pokemonImageSrc = getImageSrc(randomPokemon);
 
@@ -59,7 +60,7 @@ export function Home() {
           <Progress
             radius="none"
             value={timer / 100}
-            color="green"
+            // color="green"
             sx={{
               '& [role=progressbar]': {
                 transition: `width ${TICK}ms linear`,
@@ -69,7 +70,11 @@ export function Home() {
         </Card>
       </Grid.Col>
       <Grid.Col xs={12}>
-        <Button leftIcon={<IconPokeball />} fullWidth component={Link} to="/play">
+        <Button
+          fullWidth
+          leftIcon={<IconPokeball />}
+          onClick={() => setOpened(true)}
+        >
           Play
         </Button>
       </Grid.Col>
@@ -89,6 +94,28 @@ export function Home() {
           GitHub
         </Button>
       </Grid.Col>
+      <Modal
+        title="Game mode"
+        opened={opened}
+        size="md"
+        withCloseButton={false}
+        onClose={() => setOpened(false)}
+      >
+        <Stack sx={{width: '100%'}}>
+          <Button size="md" component={Link} to="/play/normal">
+            Normal
+          </Button>
+          <Text color="gray.7" size="sm">
+            Try to guess 10 Pokémons
+          </Text>
+          <Button size="md" component={Link} to="/play/pokemon-master">
+            Pokémon master
+          </Button>
+          <Text color="gray.7" size="sm">
+            Try to guess all the 151 Pokémons
+          </Text>
+        </Stack>
+      </Modal>
     </Grid>
   )
 }

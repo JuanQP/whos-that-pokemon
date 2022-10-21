@@ -1,25 +1,24 @@
-import { getImageSrc, pickOptions, pickRandomPokemon, SECOND } from './utils';
-import pokemons from './assets/pokemons.json';
+import { GAME_MODES, getImageSrc, pickOptions, pickRandomPokemon, SECOND } from './utils';
+import POKEMONS from './assets/pokemons.json';
 import backgroundImage from './assets/whosthatpokemon.png'
 import { useContext, useEffect, useRef, useState } from 'react';
 import { Button, Card, Grid, Image, Progress, Text } from '@mantine/core';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { context } from './AppLayout';
 import { OptionButton } from './components/OptionButton';
-import { ChosenPokemonImage } from './components/ChosenPokemonImage';
 
-const TIME_TO_CHOOSE = 5 * SECOND;
-const NEXT_POKEMON_DELAY = 3 * SECOND;
-const TICK = SECOND;
-const TOTAL_ATTEMPTS = 10;
+const TICK = SECOND / 2;
 
 export function Game() {
 
-  const [randomPokemon, setRandomPokemon] = useState(pickRandomPokemon(pokemons, false));
-  const [options, setOptions] = useState(pickOptions(pokemons, randomPokemon));
+  const { mode } = useParams();
+  const gameMode = mode === 'pokemon-master' ? GAME_MODES.PokemonMaster : GAME_MODES.Normal;
+  const pokemons = useRef([]);
+  const [randomPokemon, setRandomPokemon] = useState(null);
+  const [options, setOptions] = useState([]);
   const [selected, setSelected] = useState(null);
   const [successCount, setSuccessCount] = useState(0);
-  const [remainingAttempts, setRemainingAttempts] = useState(TOTAL_ATTEMPTS);
+  const [remainingAttempts, setRemainingAttempts] = useState(gameMode.TOTAL_ATTEMPTS);
   const [timer, setTimer] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [pickedOptions, setPickedOptions] = useState([]);
@@ -27,11 +26,19 @@ export function Game() {
   const timeout = useRef(null);
 
   useEffect(() => {
+    // Pick first pokemon
+    pokemons.current = [...POKEMONS];
+    const randomPokemon = pickRandomPokemon(pokemons.current, gameMode.REMOVE_POKEMONS);
+    setRandomPokemon(randomPokemon);
+    setOptions(pickOptions(POKEMONS, randomPokemon));
+  }, []);
+
+  useEffect(() => {
     // Clear timeout and jump to next pokemon in DELAY seconds.
     clearTimeout(timeout.current);
     timeout.current = setTimeout(function() {
       // If it has passed TIME_TO_CHOOSE miliseconds, selected option is null
-      if(timer >= TIME_TO_CHOOSE) {
+      if(timer >= gameMode.TIME_TO_CHOOSE) {
         handlePokemonOptionClick({ id: null });
       } else {
         setTimer(previous => previous + TICK);
@@ -42,12 +49,12 @@ export function Game() {
   }, [timer]);
 
   function handleNextPokemonClick() {
+    const newRandomPokemon = pickRandomPokemon(pokemons.current, gameMode.REMOVE_POKEMONS);
+    const newOptions = pickOptions(POKEMONS, newRandomPokemon);
     setSelected(null);
-    setTimer(0);
-    const newRandomPokemon = pickRandomPokemon(pokemons, false);
-    const newOptions = pickOptions(pokemons, newRandomPokemon);
     setRandomPokemon(newRandomPokemon);
     setOptions(newOptions);
+    setTimer(0);
   }
 
   function handlePokemonOptionClick(selectedPokemon) {
@@ -57,19 +64,20 @@ export function Game() {
     clearTimeout(timeout.current);
 
     const isCorrectOption = selectedPokemon.id === randomPokemon.id;
-    if(isCorrectOption) {
-      setSuccessCount(previous => previous + 1);
-    }
     // Add this pokemon to the list of past guessings
     setPickedOptions([
       ...pickedOptions,
       { ...randomPokemon, isCorrectOption },
     ]);
+    setSuccessCount(previous => isCorrectOption ? previous + 1 : previous);
     setSelected(selectedPokemon);
     setRemainingAttempts(previous => previous - 1);
 
-    // That was the last attempt. Game over.
-    if(remainingAttempts === 1) {
+    // Last attempt or game mode doesn't allow to fail: Game over.
+    if(remainingAttempts === 1
+      || (!isCorrectOption && gameMode.GAME_OVER_ON_FAIL)
+      || pokemons.current.length === 0
+    ) {
       setGameOver(true);
       return;
     }
@@ -77,7 +85,11 @@ export function Game() {
     // Next random pokemon in NEXT_POKEMON_DELAY miliseconds.
     timeout.current = setTimeout(function() {
       handleNextPokemonClick();
-    }, NEXT_POKEMON_DELAY);
+    }, gameMode.NEXT_POKEMON_DELAY);
+  }
+
+  if(randomPokemon === null) {
+    return <Text>Loading...</Text>;
   }
 
   return (
@@ -104,7 +116,7 @@ export function Game() {
           </Card.Section>
           <Progress
             radius="none"
-            value={selected ? 0 : (timer / TIME_TO_CHOOSE) * 100}
+            value={selected ? 0 : (timer / gameMode.TIME_TO_CHOOSE) * 100}
             color="green"
             sx={{
               '& [role=progressbar]': {
@@ -128,30 +140,13 @@ export function Game() {
       ))}
       {gameOver && (
         <>
-          <Grid.Col xs={12}>
-            <Text>Game finished! You've guessed correctly {successCount} pokemons</Text>
-            <Button fullWidth component={Link} to="/">
-              Return to home
-            </Button>
-          </Grid.Col>
-          <Grid.Col xs={12}>
-            <Text>These are all the pokemons you had to guess:</Text>
-          </Grid.Col>
-          <Grid.Col xs={12}>
-            {/* Show pokemon images one next to each other */}
-            <Grid justify="center">
-              {pickedOptions.map((pickedOption, i) => (
-                <Grid.Col
-                  key={`number${i}-id${pickedOption.id}`}
-                  span="content"
-                >
-                  <Card p={0} style={{ width: '160px' }}>
-                    <ChosenPokemonImage pokemon={pickedOption} />
-                  </Card>
-                </Grid.Col>
-              ))}
-            </Grid>
-          </Grid.Col>
+          <gameMode.GameOverMessage
+            pickedOptions={pickedOptions}
+            successCount={successCount}
+          />
+          <Button fullWidth component={Link} to="/">
+            Return to home
+          </Button>
         </>
       )}
     </Grid>

@@ -17,7 +17,7 @@ const router = createHashRouter([
     element: <Home />,
   },
   {
-    path: "/play",
+    path: "/play/:mode",
     element: <Game />,
   },
   {
