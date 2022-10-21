@@ -82,6 +82,9 @@ const gameboyTheme = {
         size: 'xl',
         radius: 'xs',
         color: 'dark',
+        style: {
+          backgroundColor: '#C3CFA1',
+        }
       },
       styles: {
         root: {
