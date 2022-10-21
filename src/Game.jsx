@@ -11,16 +11,13 @@ import { ChosenPokemonImage } from './components/ChosenPokemonImage';
 const TIME_TO_CHOOSE = 5 * SECOND;
 const NEXT_POKEMON_DELAY = 3 * SECOND;
 const TICK = SECOND;
-
-const INITIAL_POKEMON = pickRandomPokemon(pokemons, false);
-const INITIAL_OPTIONS = pickOptions(pokemons, INITIAL_POKEMON);
 const TOTAL_ATTEMPTS = 10;
 
 export function Game() {
 
-  const [randomPokemon, setRandomPokemon] = useState(INITIAL_POKEMON);
+  const [randomPokemon, setRandomPokemon] = useState(pickRandomPokemon(pokemons, false));
+  const [options, setOptions] = useState(pickOptions(pokemons, randomPokemon));
   const [selected, setSelected] = useState(null);
-  const [options, setOptions] = useState(INITIAL_OPTIONS);
   const [successCount, setSuccessCount] = useState(0);
   const [remainingAttempts, setRemainingAttempts] = useState(TOTAL_ATTEMPTS);
   const [timer, setTimer] = useState(0);
