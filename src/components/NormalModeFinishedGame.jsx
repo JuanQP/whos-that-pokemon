@@ -2,9 +2,10 @@ import { Card, Grid, Text } from "@mantine/core";
 import { GAME_MODES } from "../utils";
 import { ChosenPokemonImage } from "./ChosenPokemonImage";
 
-export function NormalModeFinishedGame({ pickedOptions, successCount }) {
+export function NormalModeFinishedGame({ pickedOptions = [] }) {
 
   const { TOTAL_ATTEMPTS } = GAME_MODES.Normal;
+  const successCount = pickedOptions.filter(o => o.isCorrectOption).length;
   const resultsMessage = successCount === TOTAL_ATTEMPTS ?
     `Great! You have guessed all the ${TOTAL_ATTEMPTS} pokemons!`
     : `Game finished! You correctly answered ${successCount} out of ${TOTAL_ATTEMPTS} pokemons`
