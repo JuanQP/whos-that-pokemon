@@ -10,6 +10,7 @@ import {
 import './App.css';
 import { IconDeviceGamepad, IconDeviceTvOld } from '@tabler/icons';
 import { About } from './About';
+import { Helmet } from 'react-helmet';
 
 const router = createHashRouter([
   {
@@ -139,6 +140,9 @@ function AppLayout() {
       withNormalizeCSS
       theme={ isUsingGameboyTheme ? gameboyTheme : defaultTheme }
     >
+      <Helmet>
+        <meta name="theme-color" content={isUsingGameboyTheme ? gameboyTheme.white : 'white'} />
+      </Helmet>
       <Container size="sm" pt="sm" sx={{height: '100vh'}}>
         <Title mb="xs">
           Who's that Pokémon?
