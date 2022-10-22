@@ -98,6 +98,18 @@ const gameboyTheme = {
 }
 
 const defaultTheme = {
+  globalStyles: (theme) => ({
+    body: {
+      backgroundColor: theme.colors.pikachu[0],
+      backgroundImage: "url('/pokeball-background.png')",
+    },
+    h2: {
+      textShadow: '2px 2px 2px rgba(0, 0, 0, 0.2)',
+    },
+  }),
+  colors: {
+    pikachu: Array(10).fill('#f8d138'),
+  },
   components: {
     ActionIcon: {
       defaultProps: {
@@ -115,11 +127,6 @@ const defaultTheme = {
       defaultProps: {
         shadow: 'md',
       }
-    },
-    Title: {
-      defaultProps: {
-        size: 'h2',
-      },
     },
   }
 }
@@ -141,10 +148,10 @@ function AppLayout() {
       theme={ isUsingGameboyTheme ? gameboyTheme : defaultTheme }
     >
       <Helmet>
-        <meta name="theme-color" content={isUsingGameboyTheme ? gameboyTheme.white : 'white'} />
+        <meta name="theme-color" content={isUsingGameboyTheme ? gameboyTheme.white : defaultTheme.colors.pikachu[0]} />
       </Helmet>
       <Container size="sm" pt="sm" sx={{height: '100vh'}}>
-        <Title mb="xs">
+        <Title order={2} mb="xs">
           Who's that Pokémon?
         </Title>
         <context.Provider value={isUsingGameboyTheme}>

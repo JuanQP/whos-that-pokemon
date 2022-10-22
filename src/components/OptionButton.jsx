@@ -3,10 +3,10 @@ import { useContext } from "react";
 import { context } from "../AppLayout";
 
 const gradients = [
-  {from: 'blue', to: 'blue.2'},
-  {from: 'red', to: 'red.2'},
-  {from: 'green', to: 'green.2'},
-  {from: 'yellow', to: 'yellow.2'},
+  {from: 'blue', to: 'blue.3'},
+  {from: 'red', to: 'red.3'},
+  {from: 'green', to: 'green.3'},
+  {from: 'yellow', to: 'yellow.3'},
 ];
 
 export function OptionButton({ index, randomPokemon, selectedPokemon, pokemonOption, onClick }) {

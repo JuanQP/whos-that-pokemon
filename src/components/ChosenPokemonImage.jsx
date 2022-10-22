@@ -1,8 +1,8 @@
-import { BackgroundImage, Box, Group, Text } from "@mantine/core";
+import { BackgroundImage, Box, Text } from "@mantine/core";
 import { IconCheck, IconX } from "@tabler/icons";
 import { getImageSrc } from "../utils";
 
-export function ChosenPokemonImage({ pokemon }) {
+export function ChosenPokemonImage({ pokemon, style }) {
   return (
     <Box
       sx={{
@@ -10,6 +10,7 @@ export function ChosenPokemonImage({ pokemon }) {
         flexDirection: 'column',
         alignItems: 'center'
       }}
+      style={{ ...style }}
     >
       <BackgroundImage
         src={getImageSrc(pokemon)}

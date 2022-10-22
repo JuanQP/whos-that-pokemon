@@ -41,12 +41,14 @@ export function Home() {
   return (
     <Grid>
       <Grid.Col xs={12}>
-        <Text>
-          How many Pokémons do you know? Let's find out!
-        </Text>
-        <Text>
-          Press PLAY to begin!
-        </Text>
+        <Card>
+          <Text>
+            How many Pokémons do you know? Let's find out!
+          </Text>
+          <Text weight="bold" variant="gradient" gradient={{ from: 'blue', to: 'cyan' }}>
+            Press PLAY to begin!
+          </Text>
+        </Card>
       </Grid.Col>
       <Grid.Col xs={12}>
         <Card px={0} pb={0}>
@@ -56,6 +58,9 @@ export function Home() {
               height={192}
               fit="contain"
               alt="Random pokémon"
+              sx={{
+                filter: 'drop-shadow(2px 2px 2px #000A)',
+              }}
             />
           </Card.Section>
           <Text align="center" transform="capitalize">

@@ -5,7 +5,7 @@ export function About() {
     <Grid>
       <Grid.Col xs={12}>
         <Card>
-          <Title size="h4">
+          <Title order={4}>
             What is this?
           </Title>
           <Text>
@@ -15,7 +15,7 @@ export function About() {
       </Grid.Col>
       <Grid.Col xs={12}>
         <Card>
-          <Title size="h4">
+          <Title order={4}>
             How was this made?
           </Title>
           <Text>
@@ -45,7 +45,7 @@ export function About() {
       </Grid.Col>
       <Grid.Col xs={12}>
         <Card>
-          <Title size="h4">
+          <Title order={4}>
             Can I see the code?
           </Title>
           <Text>

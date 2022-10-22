@@ -1,4 +1,4 @@
-import { Grid, Text } from "@mantine/core";
+import { Card, Grid, Text } from "@mantine/core";
 import { GAME_MODES } from "../utils";
 
 export function PokemonMasterModeFinishedGame({ pickedOptions = [] }) {
@@ -12,7 +12,9 @@ export function PokemonMasterModeFinishedGame({ pickedOptions = [] }) {
   return (
     <>
       <Grid.Col xs={12}>
-        <Text>{resultsMessage}</Text>
+        <Card>
+          <Text>{resultsMessage}</Text>
+        </Card>
       </Grid.Col>
     </>
   )

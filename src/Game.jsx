@@ -2,7 +2,7 @@ import { GAME_MODES, getImageSrc, pickOptions, pickRandomPokemon } from './utils
 import POKEMONS from './assets/pokemons.json';
 import backgroundImage from './assets/whosthatpokemon.png'
 import { useContext, useEffect, useRef, useState } from 'react';
-import { Button, Card, Grid, Image, Progress, Text } from '@mantine/core';
+import { Button, Card, Grid, Image, Progress } from '@mantine/core';
 import { Link, useParams } from 'react-router-dom';
 import { context } from './AppLayout';
 import { OptionButton } from './components/OptionButton';
@@ -90,50 +90,53 @@ export function Game() {
 
   return (
     <Grid pb={60}>
-      <Grid.Col xs={0} sm={3} />
-      <Grid.Col xs={12} sm={6} >
-        <Card withBorder pb={0} px={0}>
-          <Card.Section
-            sx={ !isUsingGameboyTheme ? {
-            backgroundImage: `url('${backgroundImage}')`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            } : undefined }
-          >
-            <Image
-              className={selected ? 'image-selected-option' : 'image-waiting-option'}
-              src={getImageSrc(randomPokemon)}
-              alt="Pokemon"
-              height={192}
-              ml={isUsingGameboyTheme ? undefined : "xs"}
-              width={isUsingGameboyTheme ? undefined : 192}
-              fit="contain"
-            />
-          </Card.Section>
-          <Progress
-            radius="none"
-            value={selected ? 0 : 100}
-            color="green"
-            sx={{
-              '& [role=progressbar]': {
-                transition: `width ${selected ? '0' : gameMode.TIME_TO_CHOOSE}ms linear`,
-              }
-            }}
-          />
-        </Card>
-      </Grid.Col>
-      <Grid.Col xs={0} sm={3} />
-      {options.map((option, index) => (
-        <Grid.Col key={option.id} xs={12} sm={6}>
-          <OptionButton
-            index={index}
-            pokemonOption={option}
-            randomPokemon={randomPokemon}
-            selectedPokemon={selected}
-            onClick={handlePokemonOptionClick}
-          />
-        </Grid.Col>
-      ))}
+      {!gameOver && (
+        <>
+          <Grid.Col xs={12}>
+            <Card withBorder pb={0} px={0}>
+              <Card.Section
+                sx={ !isUsingGameboyTheme ? {
+                backgroundImage: `url('${backgroundImage}')`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                } : undefined }
+              >
+                <Image
+                  className={selected ? 'image-selected-option' : 'image-waiting-option'}
+                  src={getImageSrc(randomPokemon)}
+                  alt="Pokemon"
+                  ml={isUsingGameboyTheme ? "25%" : "5%"}
+                  fit="contain"
+                  imageProps={{
+                    style: { width: '50%' }
+                  }}
+                />
+              </Card.Section>
+              <Progress
+                radius="none"
+                value={selected ? 0 : 100}
+                color="green"
+                sx={{
+                  '& [role=progressbar]': {
+                    transition: `width ${selected ? '0' : gameMode.TIME_TO_CHOOSE}ms linear`,
+                  }
+                }}
+              />
+            </Card>
+          </Grid.Col>
+          {options.map((option, index) => (
+            <Grid.Col key={option.id} xs={12} sm={6}>
+              <OptionButton
+                index={index}
+                pokemonOption={option}
+                randomPokemon={randomPokemon}
+                selectedPokemon={selected}
+                onClick={handlePokemonOptionClick}
+              />
+            </Grid.Col>
+          ))}
+        </>
+      )}
       {gameOver && (
         <>
           <gameMode.GameOverMessage pickedOptions={pickedOptions} />
