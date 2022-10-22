@@ -30,6 +30,11 @@ const router = createHashRouter([
 });
 
 const gameboyTheme = {
+  globalStyles: () => ({
+    body: {
+      backgroundImage: 'unset',
+    }
+  }),
   white: '#C3CFA1',
   primaryColor: 'dark',
   shadows: {
@@ -101,7 +106,6 @@ const defaultTheme = {
   globalStyles: (theme) => ({
     body: {
       backgroundColor: theme.colors.pikachu[0],
-      backgroundImage: "url('/pokeball-background.png')",
     },
     h2: {
       textShadow: '2px 2px 2px rgba(0, 0, 0, 0.2)',
@@ -148,7 +152,10 @@ function AppLayout() {
       theme={ isUsingGameboyTheme ? gameboyTheme : defaultTheme }
     >
       <Helmet>
-        <meta name="theme-color" content={isUsingGameboyTheme ? gameboyTheme.white : defaultTheme.colors.pikachu[0]} />
+        <meta
+          name="theme-color"
+          content={isUsingGameboyTheme ? gameboyTheme.white : defaultTheme.colors.pikachu[0]}
+        />
       </Helmet>
       <Container size="sm" pt="sm" sx={{height: '100vh'}}>
         <Title order={2} mb="xs">

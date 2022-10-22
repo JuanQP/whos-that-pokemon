@@ -1,11 +1,11 @@
 import { GAME_MODES, getImageSrc, pickOptions, pickRandomPokemon } from './utils';
-import POKEMONS from './assets/pokemons.json';
-import backgroundImage from './assets/whosthatpokemon.png'
 import { useContext, useEffect, useRef, useState } from 'react';
-import { Button, Card, Grid, Image, Progress } from '@mantine/core';
+import { Button, Card, createStyles, Grid, Image, Progress } from '@mantine/core';
 import { Link, useParams } from 'react-router-dom';
 import { context } from './AppLayout';
 import { OptionButton } from './components/OptionButton';
+import POKEMONS from './assets/pokemons.json';
+import whosThatPokemonBackgroundUrl from './assets/whos-that-pokemon.png';
 
 const NULL_CHOICE = {
   id: null,
@@ -13,9 +13,25 @@ const NULL_CHOICE = {
   src: null,
 };
 
+const useStyles = createStyles(() => ({
+  waiting: {
+    filter: 'brightness(0)'
+  },
+  show: {
+    filter: 'brightness(1)',
+    transition: 'filter 0.5s ease-in-out',
+  },
+  card: {
+    backgroundImage: `url(${whosThatPokemonBackgroundUrl})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+  },
+}));
+
 export function Game() {
 
   const { mode } = useParams();
+  const  { classes } = useStyles();
   const gameMode = mode === 'pokemon-master' ? GAME_MODES.PokemonMaster : GAME_MODES.Normal;
   const pokemons = useRef([]);
   const [randomPokemon, setRandomPokemon] = useState(NULL_CHOICE);
@@ -95,14 +111,10 @@ export function Game() {
           <Grid.Col xs={12}>
             <Card withBorder pb={0} px={0}>
               <Card.Section
-                sx={ !isUsingGameboyTheme ? {
-                backgroundImage: `url('${backgroundImage}')`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                } : undefined }
+                className={ !isUsingGameboyTheme ? classes.card : undefined }
               >
                 <Image
-                  className={selected ? 'image-selected-option' : 'image-waiting-option'}
+                  className={selected ? classes.show : classes.waiting}
                   src={getImageSrc(randomPokemon)}
                   alt="Pokemon"
                   ml={isUsingGameboyTheme ? "25%" : "5%"}

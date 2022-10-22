@@ -1,6 +1,9 @@
+/* Global styles */
+
 body {
   padding: 0;
   margin: 0;
+  background-image: url(./assets/pokeball-background.png);
 }
 
 @font-face {
@@ -8,13 +11,4 @@ body {
   src: local('PokemonGb-RAeo'), url(./assets/PokemonGb-RAeo.ttf) format('truetype');
   font-weight: normal;
   font-style: normal;
-}
-
-.image-waiting-option {
-  filter: brightness(0);
-}
-
-.image-selected-option {
-  filter: brightness(1);
-  transition: filter 0.5s ease-in-out;
 }
