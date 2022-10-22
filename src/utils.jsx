@@ -6,6 +6,12 @@ import { PokemonMasterModeFinishedGame } from "./components/PokemonMasterModeFin
  */
 export const SECOND = 1000;
 
+export const NULL_CHOICE = {
+  id: null,
+  name: "No option",
+  src: '',
+};
+
 export const GAME_MODES = {
   Normal: {
     TIME_TO_CHOOSE: 5 * SECOND,
@@ -28,6 +34,9 @@ export const GAME_MODES = {
 }
 
 export function getImageSrc(pokemon) {
+  if(pokemon.id === null) {
+    return '';
+  }
   return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`;
 }
 

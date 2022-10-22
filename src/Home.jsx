@@ -1,38 +1,42 @@
 import { Button, Card, Grid, Image, Modal, Progress, Stack, Text } from "@mantine/core";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { getImageSrc, pickRandomPokemon, SECOND } from "./utils";
+import { getImageSrc, NULL_CHOICE, pickRandomPokemon, SECOND } from "./utils";
 import pokemons from './assets/pokemons.json';
 import { IconBrandGithub, IconInfoCircle, IconPokeball, } from "@tabler/icons";
 
 const NEXT_IMAGE_DELAY = 10 * SECOND;
-const TICK = SECOND;
-const INITIAL_POKEMON = pickRandomPokemon(pokemons, false);
 
 export function Home() {
 
-  const [randomPokemon, setRandomPokemon] = useState(INITIAL_POKEMON);
-  const [timer, setTimer] = useState(0);
+  const [randomPokemon, setRandomPokemon] = useState(NULL_CHOICE);
   const [opened, setOpened] = useState(false);
+  const [fetchingImage, setFetchingImage] = useState(true);
   const timeout = useRef(null);
   const pokemonImageSrc = getImageSrc(randomPokemon);
+
+  useEffect(() => {
+    nextPokemon();
+  }, []);
+
+  function nextPokemon() {
+    const newRandomPokemon = pickRandomPokemon(pokemons, false);
+    setRandomPokemon(newRandomPokemon);
+    // Yes, I know this is a hack, but I'll fix it later...
+    setTimeout(() => setFetchingImage(false), 100);
+  }
 
   useEffect(() => {
     // Clear timeout and jump to next pokemon in NEXT_IMAGE_DELAY miliseconds.
     clearTimeout(timeout.current)
     timeout.current = setTimeout(function() {
+      setFetchingImage(true);
       // If it has passed NEXT_IMAGE_DELAY miliseconds, fetch a new image
-      if(timer >= NEXT_IMAGE_DELAY) {
-        const randomPokemon = pickRandomPokemon(pokemons, false);
-        setRandomPokemon(randomPokemon);
-        setTimer(0);
-      } else {
-        setTimer(previous => previous + TICK);
-      }
-    }, TICK);
+      nextPokemon();
+    }, NEXT_IMAGE_DELAY);
 
     return () => clearTimeout(timeout.current);
-  }, [timer]);
+  }, [randomPokemon]);
 
   return (
     <Grid>
@@ -59,11 +63,10 @@ export function Home() {
           </Text>
           <Progress
             radius="none"
-            value={timer / 100}
-            // color="green"
+            value={fetchingImage ? 0 : 100}
             sx={{
               '& [role=progressbar]': {
-                transition: `width ${TICK}ms linear`,
+                transition: `width ${fetchingImage ? '0' : NEXT_IMAGE_DELAY}ms linear`,
               }
             }}
           />

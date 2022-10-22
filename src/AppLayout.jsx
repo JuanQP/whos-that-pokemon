@@ -10,7 +10,7 @@ import {
 import './App.css';
 import { IconDeviceGamepad, IconDeviceTvOld } from '@tabler/icons';
 import { About } from './About';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
 const router = createHashRouter([
   {

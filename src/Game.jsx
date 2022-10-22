@@ -20,7 +20,7 @@ export function Game() {
   const pokemons = useRef([]);
   const [randomPokemon, setRandomPokemon] = useState(NULL_CHOICE);
   const [options, setOptions] = useState([]);
-  const [selected, setSelected] = useState(null);
+  const [selected, setSelected] = useState(NULL_CHOICE);
   const [gameOver, setGameOver] = useState(false);
   const [pickedOptions, setPickedOptions] = useState([]);
   const isUsingGameboyTheme = useContext(context);
@@ -86,10 +86,6 @@ export function Game() {
 
   function handleNextPokemonClick() {
     nextPokemon(pokemons.current);
-  }
-
-  if(randomPokemon === null) {
-    return <Text>Loading...</Text>;
   }
 
   return (
