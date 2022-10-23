@@ -14,7 +14,7 @@ export function NormalModeFinishedGame({ pickedOptions = [] }) {
   const timer = useRef(null);
 
   useEffect(() => {
-    timer.current = setTimeout(() => setShowOptions(true));
+    timer.current = setTimeout(() => setShowOptions(true), 100);
 
     return () => clearTimeout(timer.current);
   }, []);

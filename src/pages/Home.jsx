@@ -1,8 +1,7 @@
 import { Button, Card, Grid, Text } from "@mantine/core";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { NULL_POKEMON, pickRandomPokemon, SECOND } from "@/utils";
-import pokemons from '@assets/pokemons.json';
+import { SECOND } from "@/utils";
 import { IconBrandGithub, IconInfoCircle, IconPokeball, } from "@tabler/icons";
 import { PokemonShowcaseCard } from "@components/Home/PokemonShowcaseCard";
 import { GameModeModal } from "@components/Home/GameModeModal";
@@ -11,33 +10,7 @@ const NEXT_IMAGE_DELAY = 10 * SECOND;
 
 export function Home() {
 
-  const [randomPokemon, setRandomPokemon] = useState(NULL_POKEMON);
   const [opened, setOpened] = useState(false);
-  const [fetchingImage, setFetchingImage] = useState(true);
-  const timeout = useRef(null);
-
-  useEffect(() => {
-    nextPokemon();
-  }, []);
-
-  function nextPokemon() {
-    const newRandomPokemon = pickRandomPokemon(pokemons, false);
-    setRandomPokemon(newRandomPokemon);
-    // Yes, I know this is a hack, but I'll fix it later...
-    setTimeout(() => setFetchingImage(false), 100);
-  }
-
-  useEffect(() => {
-    // Clear timeout and jump to next pokemon in NEXT_IMAGE_DELAY miliseconds.
-    clearTimeout(timeout.current)
-    timeout.current = setTimeout(function() {
-      setFetchingImage(true);
-      // If it has passed NEXT_IMAGE_DELAY miliseconds, fetch a new image
-      nextPokemon();
-    }, NEXT_IMAGE_DELAY);
-
-    return () => clearTimeout(timeout.current);
-  }, [randomPokemon]);
 
   return (
     <Grid>
@@ -56,11 +29,7 @@ export function Home() {
         </Card>
       </Grid.Col>
       <Grid.Col xs={12}>
-        <PokemonShowcaseCard
-          delay={NEXT_IMAGE_DELAY}
-          isFetchingImage={fetchingImage}
-          pokemon={randomPokemon}
-        />
+        <PokemonShowcaseCard delay={NEXT_IMAGE_DELAY} />
       </Grid.Col>
       <Grid.Col xs={12}>
         <Button

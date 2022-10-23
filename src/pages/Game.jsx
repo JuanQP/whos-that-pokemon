@@ -54,18 +54,19 @@ export function Game() {
     clearTimeout(timeout.current);
 
     const isCorrectOption = selectedPokemon.id === randomPokemon.id;
+    const lastSelectedOption = {
+      ...randomPokemon,
+      isCorrectOption,
+    };
     // Add this pokemon to the list of past choices
     const newPickedOptions = [
       ...pickedOptions,
-      { ...randomPokemon, isCorrectOption },
-    ]
+      lastSelectedOption,
+    ];
     setPickedOptions(newPickedOptions);
     setSelected(selectedPokemon);
 
-    // Last attempt or game mode doesn't allow to fail: Game over.
-    if(newPickedOptions.length === gameMode.TOTAL_ATTEMPTS
-      || (!isCorrectOption && gameMode.GAME_OVER_ON_FAIL)
-    ) {
+    if(gameMode.isGameOver(newPickedOptions, isCorrectOption)) {
       setGameOver(true);
       return;
     }

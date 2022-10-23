@@ -1,5 +1,6 @@
 import { NormalModeFinishedGame } from "@components/Game/NormalModeFinishedGame";
 import { PokemonMasterModeFinishedGame } from "@components/Game/PokemonMasterModeFinishedGame";
+import transparentImage from "@assets/transparent.png";
 
 /**
  * Miliseconds in one second
@@ -9,7 +10,7 @@ export const SECOND = 1000;
 export const NULL_POKEMON = {
   id: null,
   name: "No option",
-  src: '',
+  src: transparentImage,
 };
 
 export const GAME_MODES = {
@@ -21,6 +22,9 @@ export const GAME_MODES = {
     REMOVE_POKEMONS: false,
     showListOnGameOver: true,
     GameOverMessage: NormalModeFinishedGame,
+    isGameOver: function (pickedOptions, lastOptionWasCorrect) {
+      return pickedOptions.length === this.TOTAL_ATTEMPTS;
+    }
   },
   PokemonMaster: {
     TIME_TO_CHOOSE: 4 * SECOND,
@@ -30,12 +34,15 @@ export const GAME_MODES = {
     REMOVE_POKEMONS: true,
     showListOnGameOver: false,
     GameOverMessage: PokemonMasterModeFinishedGame,
+    isGameOver: function (pickedOptions, lastOptionWasCorrect) {
+      return pickedOptions.length === this.TOTAL_ATTEMPTS || !lastOptionWasCorrect;
+    }
   },
 }
 
 export function getImageSrc(pokemon) {
   if(pokemon.id === null) {
-    return '';
+    return pokemon.src;
   }
   return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`;
 }

@@ -1,6 +1,8 @@
 import { Card, createStyles, Image, Progress, Text, Transition } from "@mantine/core";
-import { useEffect, useRef, useState } from "react";
-import { getImageSrc, NULL_POKEMON } from "@/utils";
+import { useEffect, useState } from "react";
+import { getImageSrc } from "@/utils";
+import { usePokemonRandomizer } from "@/hooks/usePokemonRandomizer";
+import pokemons from '@assets/pokemons.json';
 
 const useStyles = createStyles(() => ({
   div: {
@@ -10,18 +12,19 @@ const useStyles = createStyles(() => ({
   }
 }));
 
-export function PokemonShowcaseCard({ delay, isFetchingImage, pokemon }) {
+export function PokemonShowcaseCard({ delay }) {
 
   const { classes } = useStyles();
+  const { pokemon, previousPokemon, isFetchingImage } = usePokemonRandomizer({
+    delay,
+    pokemons,
+  });
   const [showFirstImage, setShowFirstImage] = useState(true);
-  const [previousPokemon, setPreviousPokemon] = useState(NULL_POKEMON);
   const pokemonImageSrc = getImageSrc(pokemon);
-  const previousImageSrc = useRef(getImageSrc(previousPokemon));
+  const previousImageSrc = getImageSrc(previousPokemon);
 
   useEffect(() => {
-    previousImageSrc.current = getImageSrc(previousPokemon);
     setShowFirstImage(previous => !previous);
-    setPreviousPokemon(pokemon);
   }, [pokemon]);
 
   return (
@@ -37,7 +40,7 @@ export function PokemonShowcaseCard({ delay, isFetchingImage, pokemon }) {
             {(styles) => (
               <Card.Section style={styles}>
                 <Image
-                  src={showFirstImage ? pokemonImageSrc : previousImageSrc.current}
+                  src={showFirstImage ? pokemonImageSrc : previousImageSrc}
                   height={192}
                   fit="contain"
                   alt=" "
@@ -56,13 +59,9 @@ export function PokemonShowcaseCard({ delay, isFetchingImage, pokemon }) {
             timingFunction="linear"
           >
             {(styles) => (
-              <Card.Section
-                style={{
-                  ...styles,
-                }}
-              >
+              <Card.Section style={styles}>
                 <Image
-                  src={!showFirstImage ? pokemonImageSrc : previousImageSrc.current}
+                  src={!showFirstImage ? pokemonImageSrc : previousImageSrc}
                   height={192}
                   fit="contain"
                   alt=" "
