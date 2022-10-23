@@ -72,12 +72,8 @@ export function Game() {
 
     // Next random pokemon in NEXT_POKEMON_DELAY miliseconds.
     timeout.current = setTimeout(function() {
-      handleNextPokemonClick();
+      nextPokemon(pokemons.current);
     }, gameMode.NEXT_POKEMON_DELAY);
-  }
-
-  function handleNextPokemonClick() {
-    nextPokemon(pokemons.current);
   }
 
   return (
