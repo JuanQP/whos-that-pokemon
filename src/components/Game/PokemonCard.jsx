@@ -1,8 +1,8 @@
 import { Card, createStyles, Image, Progress } from "@mantine/core";
 import { useContext } from "react";
-import { context } from "../../AppLayout";
-import whosThatPokemonBackgroundUrl from '../../assets/whos-that-pokemon.png';
-import { getImageSrc } from "../../utils";
+import { context } from "@components/UI/AppLayout";
+import whosThatPokemonBackgroundUrl from '@assets/whos-that-pokemon.png';
+import { getImageSrc } from "@/utils";
 
 const useStyles = createStyles(() => ({
   waiting: {

@@ -1,6 +1,6 @@
 import { Card, createStyles, Image, Progress, Text, Transition } from "@mantine/core";
 import { useEffect, useRef, useState } from "react";
-import { getImageSrc, NULL_POKEMON } from "../../utils";
+import { getImageSrc, NULL_POKEMON } from "@/utils";
 
 const useStyles = createStyles(() => ({
   div: {

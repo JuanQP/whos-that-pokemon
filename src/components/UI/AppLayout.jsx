@@ -4,8 +4,8 @@ import { createContext, useState } from 'react';
 import { RouterProvider } from "react-router-dom";
 import { Helmet } from 'react-helmet-async';
 import './App.css';
-import router from './routes';
-import { defaultTheme, gameboyTheme } from './themes';
+import router from '@/routes';
+import { defaultTheme, gameboyTheme } from '@/themes';
 
 export const context = createContext(true);
 

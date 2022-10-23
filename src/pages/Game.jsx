@@ -1,10 +1,10 @@
-import { GAME_MODES, NULL_POKEMON, pickOptions, pickRandomPokemon } from './utils';
+import { GAME_MODES, NULL_POKEMON, pickOptions, pickRandomPokemon } from '@/utils';
 import { useEffect, useRef, useState } from 'react';
 import { Button, Grid } from '@mantine/core';
 import { Link, useParams } from 'react-router-dom';
-import { OptionButton } from './components/Game/OptionButton';
-import POKEMONS from './assets/pokemons.json';
-import { PokemonCard } from './components/Game/PokemonCard';
+import { OptionButton } from '@components/Game/OptionButton';
+import POKEMONS from '@assets/pokemons.json';
+import { PokemonCard } from '@components/Game/PokemonCard';
 
 export function Game() {
 

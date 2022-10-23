@@ -1,5 +1,5 @@
-import backgroundImageUrl from './assets/pokeball-background.png';
-import gameboyBackgroundImageUrl from './assets/pixel-pokeball-background.png';
+import backgroundImageUrl from '@assets/pokeball-background.png';
+import gameboyBackgroundImageUrl from '@assets/pixel-pokeball-background.png';
 
 const GB_GREEN_BACKGROUND = '#C3CFA1';
 

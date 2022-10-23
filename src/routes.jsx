@@ -1,7 +1,7 @@
 import { createHashRouter } from "react-router-dom";
-import { About } from "./About";
-import { Game } from "./Game";
-import { Home } from "./Home";
+import { About } from "@pages/About";
+import { Game } from "@pages/Game";
+import { Home } from "@pages/Home";
 
 export default createHashRouter([
   {

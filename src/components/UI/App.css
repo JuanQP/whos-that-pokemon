@@ -7,7 +7,7 @@ body {
 
 @font-face {
   font-family: 'PokemonGb-RAeo';
-  src: local('PokemonGb-RAeo'), url(./assets/PokemonGb-RAeo.ttf) format('truetype');
+  src: local('PokemonGb-RAeo'), url(@assets/PokemonGb-RAeo.ttf) format('truetype');
   font-weight: normal;
   font-style: normal;
 }

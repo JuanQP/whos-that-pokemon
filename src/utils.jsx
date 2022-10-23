@@ -1,5 +1,5 @@
-import { NormalModeFinishedGame } from "./components/Game/NormalModeFinishedGame";
-import { PokemonMasterModeFinishedGame } from "./components/Game/PokemonMasterModeFinishedGame";
+import { NormalModeFinishedGame } from "@components/Game/NormalModeFinishedGame";
+import { PokemonMasterModeFinishedGame } from "@components/Game/PokemonMasterModeFinishedGame";
 
 /**
  * Miliseconds in one second
