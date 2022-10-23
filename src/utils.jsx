@@ -1,12 +1,12 @@
-import { NormalModeFinishedGame } from "./components/NormalModeFinishedGame";
-import { PokemonMasterModeFinishedGame } from "./components/PokemonMasterModeFinishedGame";
+import { NormalModeFinishedGame } from "./components/Game/NormalModeFinishedGame";
+import { PokemonMasterModeFinishedGame } from "./components/Game/PokemonMasterModeFinishedGame";
 
 /**
  * Miliseconds in one second
  */
 export const SECOND = 1000;
 
-export const NULL_CHOICE = {
+export const NULL_POKEMON = {
   id: null,
   name: "No option",
   src: '',

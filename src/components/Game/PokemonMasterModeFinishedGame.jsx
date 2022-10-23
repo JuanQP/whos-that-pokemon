@@ -1,5 +1,5 @@
 import { Card, Grid, Text } from "@mantine/core";
-import { GAME_MODES } from "../utils";
+import { GAME_MODES } from "../../utils";
 
 export function PokemonMasterModeFinishedGame({ pickedOptions = [] }) {
 

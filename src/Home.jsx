@@ -1,19 +1,20 @@
-import { Button, Card, Grid, Image, Modal, Progress, Stack, Text } from "@mantine/core";
+import { Button, Card, Grid, Text } from "@mantine/core";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { getImageSrc, NULL_CHOICE, pickRandomPokemon, SECOND } from "./utils";
+import { NULL_POKEMON, pickRandomPokemon, SECOND } from "./utils";
 import pokemons from './assets/pokemons.json';
 import { IconBrandGithub, IconInfoCircle, IconPokeball, } from "@tabler/icons";
+import { PokemonShowcaseCard } from "./components/Home/PokemonShowcaseCard";
+import { GameModeModal } from "./components/Home/GameModeModal";
 
 const NEXT_IMAGE_DELAY = 10 * SECOND;
 
 export function Home() {
 
-  const [randomPokemon, setRandomPokemon] = useState(NULL_CHOICE);
+  const [randomPokemon, setRandomPokemon] = useState(NULL_POKEMON);
   const [opened, setOpened] = useState(false);
   const [fetchingImage, setFetchingImage] = useState(true);
   const timeout = useRef(null);
-  const pokemonImageSrc = getImageSrc(randomPokemon);
 
   useEffect(() => {
     nextPokemon();
@@ -45,37 +46,21 @@ export function Home() {
           <Text>
             How many Pokémons do you know? Let's find out!
           </Text>
-          <Text weight="bold" variant="gradient" gradient={{ from: 'blue', to: 'cyan' }}>
+          <Text
+            weight="bold"
+            variant="gradient"
+            gradient={{ from: 'red', to: 'blue' }}
+          >
             Press PLAY to begin!
           </Text>
         </Card>
       </Grid.Col>
       <Grid.Col xs={12}>
-        <Card px={0} pb={0}>
-          <Card.Section>
-            <Image
-              src={pokemonImageSrc}
-              height={192}
-              fit="contain"
-              alt="Random pokémon"
-              sx={{
-                filter: 'drop-shadow(2px 2px 2px #000A)',
-              }}
-            />
-          </Card.Section>
-          <Text align="center" transform="capitalize">
-            {randomPokemon.name}
-          </Text>
-          <Progress
-            radius="none"
-            value={fetchingImage ? 0 : 100}
-            sx={{
-              '& [role=progressbar]': {
-                transition: `width ${fetchingImage ? '0' : NEXT_IMAGE_DELAY}ms linear`,
-              }
-            }}
-          />
-        </Card>
+        <PokemonShowcaseCard
+          delay={NEXT_IMAGE_DELAY}
+          isFetchingImage={fetchingImage}
+          pokemon={randomPokemon}
+        />
       </Grid.Col>
       <Grid.Col xs={12}>
         <Button
@@ -87,7 +72,7 @@ export function Home() {
         </Button>
       </Grid.Col>
       <Grid.Col xs={12} sm={6}>
-        <Button leftIcon={<IconInfoCircle />} fullWidth component={Link} to="/about">
+        <Button fullWidth leftIcon={<IconInfoCircle />} component={Link} to="/about">
           About
         </Button>
       </Grid.Col>
@@ -102,28 +87,7 @@ export function Home() {
           GitHub
         </Button>
       </Grid.Col>
-      <Modal
-        title="Game mode"
-        opened={opened}
-        size="md"
-        withCloseButton={false}
-        onClose={() => setOpened(false)}
-      >
-        <Stack sx={{width: '100%'}}>
-          <Button size="md" component={Link} to="/play/normal">
-            Normal
-          </Button>
-          <Text color="gray.7" size="sm">
-            Try to guess 10 Pokémons
-          </Text>
-          <Button size="md" component={Link} to="/play/pokemon-master">
-            Pokémon master
-          </Button>
-          <Text color="gray.7" size="sm">
-            Try to guess all the 151 Pokémons
-          </Text>
-        </Stack>
-      </Modal>
+      <GameModeModal opened={opened} onClose={() => setOpened(false)} />
     </Grid>
   )
 }

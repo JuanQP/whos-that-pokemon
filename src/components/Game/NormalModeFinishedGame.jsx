@@ -1,6 +1,6 @@
 import { Card, Grid, Text, Transition } from "@mantine/core";
 import { useEffect, useRef, useState } from "react";
-import { GAME_MODES } from "../utils";
+import { GAME_MODES } from "../../utils";
 import { ChosenPokemonImage } from "./ChosenPokemonImage";
 
 export function NormalModeFinishedGame({ pickedOptions = [] }) {
@@ -34,11 +34,14 @@ export function NormalModeFinishedGame({ pickedOptions = [] }) {
             <Grid.Col
               key={`number${i}-id${pickedOption.id}`}
               span="content"
-              sx={{
-                minWidth: '160px',
-              }}
+              sx={{ minWidth: '160px' }}
             >
-              <Transition mounted={showOptions} transition="scale-x" duration={500} timingFunction="ease">
+              <Transition
+                mounted={showOptions}
+                transition="scale-x"
+                duration={500}
+                timingFunction="ease"
+              >
                 {(styles) => (
                   <Card
                     p={0}

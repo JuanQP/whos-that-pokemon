@@ -1,45 +1,21 @@
-import { GAME_MODES, getImageSrc, pickOptions, pickRandomPokemon } from './utils';
-import { useContext, useEffect, useRef, useState } from 'react';
-import { Button, Card, createStyles, Grid, Image, Progress } from '@mantine/core';
+import { GAME_MODES, NULL_POKEMON, pickOptions, pickRandomPokemon } from './utils';
+import { useEffect, useRef, useState } from 'react';
+import { Button, Grid } from '@mantine/core';
 import { Link, useParams } from 'react-router-dom';
-import { context } from './AppLayout';
-import { OptionButton } from './components/OptionButton';
+import { OptionButton } from './components/Game/OptionButton';
 import POKEMONS from './assets/pokemons.json';
-import whosThatPokemonBackgroundUrl from './assets/whos-that-pokemon.png';
-
-const NULL_CHOICE = {
-  id: null,
-  name: "No option",
-  src: null,
-};
-
-const useStyles = createStyles(() => ({
-  waiting: {
-    filter: 'brightness(0)'
-  },
-  show: {
-    filter: 'brightness(1)',
-    transition: 'filter 0.5s ease-in-out',
-  },
-  card: {
-    backgroundImage: `url(${whosThatPokemonBackgroundUrl})`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-  },
-}));
+import { PokemonCard } from './components/Game/PokemonCard';
 
 export function Game() {
 
   const { mode } = useParams();
-  const  { classes } = useStyles();
   const gameMode = mode === 'pokemon-master' ? GAME_MODES.PokemonMaster : GAME_MODES.Normal;
   const pokemons = useRef([]);
-  const [randomPokemon, setRandomPokemon] = useState(NULL_CHOICE);
+  const [randomPokemon, setRandomPokemon] = useState(NULL_POKEMON);
   const [options, setOptions] = useState([]);
-  const [selected, setSelected] = useState(NULL_CHOICE);
+  const [selected, setSelected] = useState(NULL_POKEMON);
   const [gameOver, setGameOver] = useState(false);
   const [pickedOptions, setPickedOptions] = useState([]);
-  const isUsingGameboyTheme = useContext(context);
   const timeout = useRef(null);
 
   // Initialize game
@@ -65,7 +41,7 @@ export function Game() {
     // Clear timeout and set null choice if choice time expires.
     clearTimeout(timeout.current);
     timeout.current = setTimeout(function() {
-      handlePokemonOptionClick(NULL_CHOICE);
+      handlePokemonOptionClick(NULL_POKEMON);
     }, gameMode.TIME_TO_CHOOSE);
 
     return () => clearTimeout(timeout.current);
@@ -109,32 +85,11 @@ export function Game() {
       {!gameOver && (
         <>
           <Grid.Col xs={12}>
-            <Card withBorder pb={0} px={0}>
-              <Card.Section
-                className={ !isUsingGameboyTheme ? classes.card : undefined }
-              >
-                <Image
-                  className={selected ? classes.show : classes.waiting}
-                  src={getImageSrc(randomPokemon)}
-                  alt="Pokemon"
-                  ml={isUsingGameboyTheme ? "25%" : "5%"}
-                  fit="contain"
-                  imageProps={{
-                    style: { width: '50%' }
-                  }}
-                />
-              </Card.Section>
-              <Progress
-                radius="none"
-                value={selected ? 0 : 100}
-                color="green"
-                sx={{
-                  '& [role=progressbar]': {
-                    transition: `width ${selected ? '0' : gameMode.TIME_TO_CHOOSE}ms linear`,
-                  }
-                }}
-              />
-            </Card>
+            <PokemonCard
+              randomPokemon={randomPokemon}
+              timeToChoose={gameMode.TIME_TO_CHOOSE}
+              revealPokemon={!!selected}
+            />
           </Grid.Col>
           {options.map((option, index) => (
             <Grid.Col key={option.id} xs={12} sm={6}>

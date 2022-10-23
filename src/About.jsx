@@ -1,4 +1,4 @@
-import { Anchor, Card, Grid, SimpleGrid, Stack, Text, Title } from "@mantine/core";
+import { Anchor, Card, Grid, SimpleGrid, Text, Title } from "@mantine/core";
 
 export function About() {
   return (
@@ -38,9 +38,6 @@ export function About() {
               Mantine
             </Anchor>
           </SimpleGrid>
-          <Stack>
-
-          </Stack>
         </Card>
       </Grid.Col>
       <Grid.Col xs={12}>
