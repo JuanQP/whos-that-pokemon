@@ -21,8 +21,8 @@ export function usePokemonRandomizer({
     if(pokemons.length === 0) return;
 
     const newRandomPokemon = pickRandomPokemon(pokemons, false);
-    setPreviousPokemon(pokemon);
-    setPokemon(newRandomPokemon);
+    setPreviousPokemon({...pokemon});
+    setPokemon({...newRandomPokemon});
     // Yes, I know this is a hack, but I'll fix it later...
     setTimeout(() => setIsFetchingImage(false), 100);
   }

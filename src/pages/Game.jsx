@@ -31,7 +31,7 @@ export function Game() {
     const newOptions = pickOptions(POKEMONS, newRandomPokemon);
 
     setSelected(null);
-    setRandomPokemon(newRandomPokemon);
+    setRandomPokemon({...newRandomPokemon});
     setOptions(newOptions);
   }
 
