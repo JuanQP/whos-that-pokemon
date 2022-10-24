@@ -1,4 +1,4 @@
-import { Card, createStyles, Image, Progress, Text, Transition } from "@mantine/core";
+import { Card, createStyles, Image, Progress, Text } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { getImageSrc } from "@/utils";
 import { usePokemonRandomizer } from "@/hooks/usePokemonRandomizer";
@@ -9,6 +9,29 @@ const useStyles = createStyles(() => ({
     minHeight: 192,
     display: 'flex',
     justifyContent: 'center',
+  },
+  rotateIn1: {
+    transform: 'rotateY(0deg)',
+    transition: 'transform 1.5s ease-in-out',
+    backfaceVisibility: 'hidden',
+  },
+  rotateOut1: {
+    transform: 'rotateY(180deg)',
+    transition: 'transform 1.5s ease-in-out',
+    backfaceVisibility: 'hidden',
+  },
+  rotateIn2: {
+    transform: 'rotateY(0deg)',
+    transition: 'transform 1.5s ease-in-out',
+    backfaceVisibility: 'hidden',
+  },
+  rotateOut2: {
+    transform: 'rotateY(-180deg)',
+    transition: 'transform 1.5s ease-in-out',
+    backfaceVisibility: 'hidden',
+  },
+  image: {
+    filter: 'drop-shadow(2px 2px 2px #000A)',
   }
 }));
 
@@ -31,45 +54,30 @@ export function PokemonShowcaseCard({ delay }) {
     <Card px={0} pb={0}>
       <div className={classes.div}>
         <div>
-          <Transition
-            mounted={showFirstImage}
-            transition="fade"
-            duration={1000}
-            timingFunction="linear"
-          >
-            {(styles) => (
-              <Card.Section style={styles}>
-                <Image
-                  src={showFirstImage ? pokemonImageSrc : previousImageSrc}
-                  height={192}
-                  fit="contain"
-                  alt=" "
-                  sx={{ filter: 'drop-shadow(2px 2px 2px #000A)' }}
-                />
-              </Card.Section>
-            )}
-          </Transition>
+          <Card.Section className={
+            showFirstImage ? classes.rotateIn1 : classes.rotateOut1
+          }>
+            <Image
+              src={showFirstImage ? pokemonImageSrc : previousImageSrc}
+              height={192}
+              fit="contain"
+              alt=" "
+              sx={classes.image}
+            />
+          </Card.Section>
         </div>
-
-        <div style={{position: 'absolute',}}>
-          <Transition
-            mounted={!showFirstImage}
-            transition="fade"
-            duration={1000}
-            timingFunction="linear"
-          >
-            {(styles) => (
-              <Card.Section style={styles}>
-                <Image
-                  src={!showFirstImage ? pokemonImageSrc : previousImageSrc}
-                  height={192}
-                  fit="contain"
-                  alt=" "
-                  sx={{ filter: 'drop-shadow(2px 2px 2px #000A)' }}
-                />
-              </Card.Section>
-            )}
-          </Transition>
+        <div style={{ position: 'absolute' }}>
+          <Card.Section className={
+            !showFirstImage ? classes.rotateIn2 : classes.rotateOut2
+          }>
+            <Image
+              src={!showFirstImage ? pokemonImageSrc : previousImageSrc}
+              height={192}
+              fit="contain"
+              alt=" "
+              className={classes.image}
+            />
+          </Card.Section>
         </div>
       </div>
       <Text align="center" transform="capitalize">
