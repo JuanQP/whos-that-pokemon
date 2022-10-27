@@ -1,8 +1,8 @@
+import { usePokemonRandomizer } from "@/hooks/usePokemonRandomizer";
+import { getImageSrc } from "@/utils";
+import pokemons from '@assets/pokemons.json';
 import { Card, createStyles, Image, Progress, Text } from "@mantine/core";
 import { useEffect, useState } from "react";
-import { getImageSrc } from "@/utils";
-import { usePokemonRandomizer } from "@/hooks/usePokemonRandomizer";
-import pokemons from '@assets/pokemons.json';
 
 const useStyles = createStyles(() => ({
   div: {

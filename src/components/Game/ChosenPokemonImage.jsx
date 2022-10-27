@@ -1,6 +1,6 @@
+import { getImageSrc } from "@/utils";
 import { BackgroundImage, Box, createStyles, Text } from "@mantine/core";
 import { IconCheck, IconX } from "@tabler/icons";
-import { getImageSrc } from "@/utils";
 
 const useStyles = createStyles(() => ({
   box: {

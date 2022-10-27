@@ -1,12 +1,13 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import AppLayout from '@components/UI/AppLayout';
+import router from '@/routes';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 import { HelmetProvider } from 'react-helmet-async';
+import { RouterProvider } from 'react-router-dom';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <HelmetProvider>
-      <AppLayout />
+      <RouterProvider router={router} />
     </HelmetProvider>
   </React.StrictMode>
 )

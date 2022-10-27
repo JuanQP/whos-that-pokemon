@@ -1,7 +1,7 @@
-import { Card, Grid, Text, Transition } from "@mantine/core";
-import { useEffect, useRef, useState } from "react";
 import { GAME_MODES } from "@/utils";
 import { ChosenPokemonImage } from "@components/Game/ChosenPokemonImage";
+import { Card, Grid, Text, Transition } from "@mantine/core";
+import { useEffect, useRef, useState } from "react";
 
 export function NormalModeFinishedGame({ pickedOptions = [] }) {
 

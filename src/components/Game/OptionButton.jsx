@@ -1,6 +1,6 @@
+import { context } from "@components/UI/AppLayout";
 import { Button } from "@mantine/core";
 import { useContext } from "react";
-import { context } from "@components/UI/AppLayout";
 
 const gradients = [
   {from: 'blue', to: 'blue.3'},

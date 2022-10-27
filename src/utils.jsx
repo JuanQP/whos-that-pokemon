@@ -1,6 +1,6 @@
+import transparentImage from "@assets/transparent.png";
 import { NormalModeFinishedGame } from "@components/Game/NormalModeFinishedGame";
 import { PokemonMasterModeFinishedGame } from "@components/Game/PokemonMasterModeFinishedGame";
-import transparentImage from "@assets/transparent.png";
 
 /**
  * Miliseconds in one second

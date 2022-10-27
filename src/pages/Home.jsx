@@ -1,10 +1,10 @@
+import { SECOND } from "@/utils";
+import { GameModeModal } from "@components/Home/GameModeModal";
+import { PokemonShowcaseCard } from "@components/Home/PokemonShowcaseCard";
 import { Button, Card, Grid, Text } from "@mantine/core";
+import { IconBrandGithub, IconInfoCircle, IconPokeball } from "@tabler/icons";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { SECOND } from "@/utils";
-import { IconBrandGithub, IconInfoCircle, IconPokeball, } from "@tabler/icons";
-import { PokemonShowcaseCard } from "@components/Home/PokemonShowcaseCard";
-import { GameModeModal } from "@components/Home/GameModeModal";
 
 const NEXT_IMAGE_DELAY = 10 * SECOND;
 

@@ -1,11 +1,10 @@
+import { defaultTheme, gameboyTheme } from '@/themes';
 import { ActionIcon, Affix, Container, MantineProvider, Title } from '@mantine/core';
 import { IconDeviceGamepad, IconDeviceTvOld } from '@tabler/icons';
 import { createContext, useState } from 'react';
-import { RouterProvider } from "react-router-dom";
 import { Helmet } from 'react-helmet-async';
+import { Outlet } from 'react-router-dom';
 import './App.css';
-import router from '@/routes';
-import { defaultTheme, gameboyTheme } from '@/themes';
 
 export const context = createContext(true);
 
@@ -34,7 +33,8 @@ function AppLayout() {
           Who's that Pokémon?
         </Title>
         <context.Provider value={isUsingGameboyTheme}>
-          <RouterProvider router={router} />
+          {/* Here goes the page content */}
+          <Outlet />
         </context.Provider>
         <Affix position={{ bottom: 20, right: 20 }}>
           <ActionIcon onClick={handleToggleTheme}>
