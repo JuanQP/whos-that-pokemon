@@ -11,7 +11,7 @@ export function Game() {
   const { mode } = useParams();
   const gameMode = mode === 'pokemon-master' ? GAME_MODES.PokemonMaster : GAME_MODES.Normal;
   const pokemons = useRef([]);
-  const [randomPokemon, setRandomPokemon] = useState(NULL_POKEMON);
+  const [pokemonToGuess, setPokemonToGuess] = useState(NULL_POKEMON);
   const [options, setOptions] = useState([]);
   const [selected, setSelected] = useState(NULL_POKEMON);
   const [gameOver, setGameOver] = useState(false);
@@ -31,12 +31,12 @@ export function Game() {
     const newOptions = pickOptions(POKEMONS, newRandomPokemon);
 
     setSelected(null);
-    setRandomPokemon({...newRandomPokemon});
+    setPokemonToGuess({...newRandomPokemon});
     setOptions(newOptions);
   }
 
   useEffect(() => {
-    if(!randomPokemon) return;
+    if(!pokemonToGuess) return;
 
     // Clear timeout and set null choice if choice time expires.
     clearTimeout(timeout.current);
@@ -45,7 +45,7 @@ export function Game() {
     }, gameMode.TIME_TO_CHOOSE);
 
     return () => clearTimeout(timeout.current);
-  }, [randomPokemon]); // Run this when a random pokemon is picked
+  }, [pokemonToGuess]); // Run this when a random pokemon is picked
 
   function handlePokemonOptionClick(selectedPokemon) {
     if(selected) return;
@@ -53,9 +53,9 @@ export function Game() {
     // Stop timer if Pokemon selected
     clearTimeout(timeout.current);
 
-    const isCorrectOption = selectedPokemon.id === randomPokemon.id;
+    const isCorrectOption = selectedPokemon.id === pokemonToGuess.id;
     const lastSelectedOption = {
-      ...randomPokemon,
+      ...pokemonToGuess,
       isCorrectOption,
     };
     // Add this pokemon to the list of past choices
@@ -83,7 +83,7 @@ export function Game() {
         <>
           <Grid.Col xs={12}>
             <PokemonCard
-              randomPokemon={randomPokemon}
+              pokemon={pokemonToGuess}
               timeToChoose={gameMode.TIME_TO_CHOOSE}
               revealPokemon={!!selected}
             />
@@ -93,7 +93,7 @@ export function Game() {
               <OptionButton
                 index={index}
                 pokemonOption={option}
-                randomPokemon={randomPokemon}
+                pokemonToGuess={pokemonToGuess}
                 selectedPokemon={selected}
                 onClick={handlePokemonOptionClick}
               />

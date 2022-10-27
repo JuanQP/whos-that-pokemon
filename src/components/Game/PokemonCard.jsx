@@ -19,7 +19,7 @@ const useStyles = createStyles(() => ({
   },
 }));
 
-export function PokemonCard({ randomPokemon, revealPokemon = false, timeToChoose }) {
+export function PokemonCard({ pokemon, revealPokemon = false, timeToChoose }) {
 
   const  { classes } = useStyles();
   const isUsingGameboyTheme = useContext(context);
@@ -31,7 +31,7 @@ export function PokemonCard({ randomPokemon, revealPokemon = false, timeToChoose
       >
         <Image
           className={revealPokemon ? classes.show : classes.waiting}
-          src={getImageSrc(randomPokemon)}
+          src={getImageSrc(pokemon)}
           alt="Pokemon"
           ml={isUsingGameboyTheme ? "25%" : "5%"}
           fit="contain"

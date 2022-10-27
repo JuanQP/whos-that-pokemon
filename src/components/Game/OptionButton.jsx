@@ -9,11 +9,11 @@ const gradients = [
   {from: 'yellow', to: 'yellow.3'},
 ];
 
-export function OptionButton({ index, randomPokemon, selectedPokemon, pokemonOption, onClick }) {
+export function OptionButton({ index, pokemonToGuess, selectedPokemon, pokemonOption, onClick }) {
 
   const isUsingGameboyTheme = useContext(context);
   const isSelectedOption = pokemonOption.id === selectedPokemon?.id;
-  const isCorrectOption = pokemonOption.id === randomPokemon.id;
+  const isCorrectOption = pokemonOption.id === pokemonToGuess.id;
 
   // styles
   const disabled = selectedPokemon && !isSelectedOption && !isCorrectOption;
