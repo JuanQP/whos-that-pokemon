@@ -10,24 +10,24 @@ const useStyles = createStyles(() => ({
     display: 'flex',
     justifyContent: 'center',
   },
-  rotateIn1: {
-    transform: 'rotateY(0deg)',
-    transition: 'transform 1.5s ease-in-out',
-    backfaceVisibility: 'hidden',
-  },
-  rotateOut1: {
-    transform: 'rotateY(180deg)',
-    transition: 'transform 1.5s ease-in-out',
-    backfaceVisibility: 'hidden',
-  },
-  rotateIn2: {
-    transform: 'rotateY(0deg)',
-    transition: 'transform 1.5s ease-in-out',
-    backfaceVisibility: 'hidden',
-  },
-  rotateOut2: {
+  beforeRotateIn: {
     transform: 'rotateY(-180deg)',
-    transition: 'transform 1.5s ease-in-out',
+    transition: 'none',
+    backfaceVisibility: 'hidden',
+  },
+  rotateIn: {
+    transform: 'rotateY(0deg)',
+    transition: 'transform 2s ease-in-out',
+    backfaceVisibility: 'hidden',
+  },
+  beforeRotateOut: {
+    transform: 'rotateY(0deg)',
+    transition: 'none',
+    backfaceVisibility: 'hidden',
+  },
+  rotateOut: {
+    transform: 'rotateY(180deg)',
+    transition: 'transform 2s ease-in-out',
     backfaceVisibility: 'hidden',
   },
   image: {
@@ -46,6 +46,15 @@ export function PokemonShowcaseCard({ delay }) {
   const pokemonImageSrc = getImageSrc(pokemon);
   const previousImageSrc = getImageSrc(previousPokemon);
 
+  let image1Class, image2Class;
+  if(isFetchingImage) {
+    image1Class = showFirstImage ? classes.beforeRotateIn : classes.beforeRotateOut;
+    image2Class = showFirstImage ? classes.beforeRotateOut : classes.beforeRotateIn;
+  } else {
+    image1Class = showFirstImage ? classes.rotateIn : classes.rotateOut;
+    image2Class = showFirstImage ? classes.rotateOut : classes.rotateIn;
+  }
+
   useEffect(() => {
     setShowFirstImage(previous => !previous);
   }, [pokemon]);
@@ -53,10 +62,8 @@ export function PokemonShowcaseCard({ delay }) {
   return (
     <Card px={0} pb={0}>
       <div className={classes.div}>
-        <div>
-          <Card.Section className={
-            showFirstImage ? classes.rotateIn1 : classes.rotateOut1
-          }>
+        <div style={{ zIndex: showFirstImage ? 1 : 0}}>
+          <Card.Section className={image1Class}>
             <Image
               src={showFirstImage ? pokemonImageSrc : previousImageSrc}
               height={192}
@@ -66,10 +73,8 @@ export function PokemonShowcaseCard({ delay }) {
             />
           </Card.Section>
         </div>
-        <div style={{ position: 'absolute' }}>
-          <Card.Section className={
-            !showFirstImage ? classes.rotateIn2 : classes.rotateOut2
-          }>
+        <div style={{ position: 'absolute', zIndex: showFirstImage ? 0 : 1 }}>
+          <Card.Section className={image2Class}>
             <Image
               src={!showFirstImage ? pokemonImageSrc : previousImageSrc}
               height={192}
