@@ -27,7 +27,7 @@ export const GAME_MODES = {
     }
   },
   PokemonMaster: {
-    TIME_TO_CHOOSE: 4 * SECOND,
+    TIME_TO_CHOOSE: 5 * SECOND,
     NEXT_POKEMON_DELAY: 2 * SECOND,
     TOTAL_ATTEMPTS: 151,
     GAME_OVER_ON_FAIL: true,

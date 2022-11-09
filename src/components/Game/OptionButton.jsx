@@ -9,14 +9,14 @@ const gradients = [
   {from: 'yellow', to: 'yellow.3'},
 ];
 
-export function OptionButton({ index, pokemonToGuess, selectedPokemon, pokemonOption, onClick }) {
+export function OptionButton({ index, gameStarted, pokemonToGuess, selectedPokemon, pokemonOption, onClick }) {
 
   const isUsingGameboyTheme = useContext(context);
   const isSelectedOption = pokemonOption.id === selectedPokemon?.id;
   const isCorrectOption = pokemonOption.id === pokemonToGuess.id;
 
   // styles
-  const disabled = selectedPokemon && !isSelectedOption && !isCorrectOption;
+  const disabled = selectedPokemon && !isSelectedOption && !isCorrectOption || !gameStarted;
   const variant =
     isSelectedOption || (selectedPokemon && isCorrectOption) ? 'filled' :
       isUsingGameboyTheme ? undefined : 'gradient';

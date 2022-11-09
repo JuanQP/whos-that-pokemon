@@ -1,16 +1,26 @@
+import { usePokemonRandomizer } from "@/hooks/usePokemonRandomizer";
 import { SECOND } from "@/utils";
+import POKEMONS from '@assets/pokemons.json';
 import { GameModeModal } from "@components/Home/GameModeModal";
 import { PokemonShowcaseCard } from "@components/Home/PokemonShowcaseCard";
 import { Button, Card, Grid, Text } from "@mantine/core";
 import { IconBrandGithub, IconInfoCircle, IconPokeball } from "@tabler/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+
 
 const NEXT_IMAGE_DELAY = 10 * SECOND;
 
 export function Home() {
 
-  const [opened, setOpened] = useState(false);
+  const [modalOpened, setOpenedModal] = useState(false);
+  const { pokemon, nextPokemon } = usePokemonRandomizer({ pokemons: POKEMONS });
+
+  useEffect(() => {
+    nextPokemon();
+    const interval = setInterval(nextPokemon, NEXT_IMAGE_DELAY);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <Grid>
@@ -29,13 +39,13 @@ export function Home() {
         </Card>
       </Grid.Col>
       <Grid.Col xs={12}>
-        <PokemonShowcaseCard delay={NEXT_IMAGE_DELAY} />
+        <PokemonShowcaseCard pokemon={pokemon} delay={NEXT_IMAGE_DELAY} />
       </Grid.Col>
       <Grid.Col xs={12}>
         <Button
           fullWidth
           leftIcon={<IconPokeball />}
-          onClick={() => setOpened(true)}
+          onClick={() => setOpenedModal(true)}
         >
           Play
         </Button>
@@ -56,7 +66,7 @@ export function Home() {
           GitHub
         </Button>
       </Grid.Col>
-      <GameModeModal opened={opened} onClose={() => setOpened(false)} />
+      <GameModeModal opened={modalOpened} onClose={() => setOpenedModal(false)} />
     </Grid>
   )
 }

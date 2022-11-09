@@ -1,8 +1,9 @@
 import { getImageSrc } from "@/utils";
 import whosThatPokemonBackgroundUrl from '@assets/whos-that-pokemon.png';
 import { context } from "@components/UI/AppLayout";
-import { Card, createStyles, Image, Progress } from "@mantine/core";
+import { Card, createStyles, Image } from "@mantine/core";
 import { useContext } from "react";
+import { ProgressTimer } from "../UI/ProgressTimer";
 
 const useStyles = createStyles(() => ({
   waiting: {
@@ -19,10 +20,12 @@ const useStyles = createStyles(() => ({
   },
 }));
 
-export function PokemonCard({ pokemon, revealPokemon = false, timeToChoose }) {
+export function PokemonCard({ gameStarted, pokemon, revealPokemon = false, timeToChoose }) {
 
   const  { classes } = useStyles();
   const isUsingGameboyTheme = useContext(context);
+
+  if(!gameStarted) return null;
 
   return (
     <Card withBorder pb={0} px={0}>
@@ -40,15 +43,11 @@ export function PokemonCard({ pokemon, revealPokemon = false, timeToChoose }) {
           }}
         />
       </Card.Section>
-      <Progress
+      <ProgressTimer
         radius="none"
-        value={revealPokemon ? 0 : 100}
         color="green"
-        sx={{
-          '& [role=progressbar]': {
-            transition: `width ${revealPokemon ? '0' : timeToChoose}ms linear`,
-          }
-        }}
+        start={!revealPokemon && gameStarted}
+        time={timeToChoose}
       />
     </Card>
   )

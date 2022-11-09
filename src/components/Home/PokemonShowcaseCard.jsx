@@ -1,8 +1,7 @@
-import { usePokemonRandomizer } from "@/hooks/usePokemonRandomizer";
-import { getImageSrc } from "@/utils";
-import pokemons from '@assets/pokemons.json';
-import { Card, createStyles, Image, Progress, Text } from "@mantine/core";
+import { getImageSrc, NULL_POKEMON } from "@/utils";
+import { Card, createStyles, Image, Text } from "@mantine/core";
 import { useEffect, useState } from "react";
+import { ProgressTimer } from "../UI/ProgressTimer";
 
 const useStyles = createStyles(() => ({
   div: {
@@ -39,19 +38,18 @@ const useStyles = createStyles(() => ({
   }
 }));
 
-export function PokemonShowcaseCard({ delay }) {
+export function PokemonShowcaseCard({ pokemon, delay }) {
 
   const { classes } = useStyles();
-  const { pokemon, previousPokemon, isFetchingImage } = usePokemonRandomizer({
-    delay,
-    pokemons,
-  });
   const [showFirstImage, setShowFirstImage] = useState(true);
-  const pokemonImageSrc = getImageSrc(pokemon);
+  const [currentPokemon, setCurrentPokemon] = useState(NULL_POKEMON);
+  const [previousPokemon, setPreviousPokemon] = useState(NULL_POKEMON);
+  const [isChanging, setIsChanging] = useState(false);
+  const pokemonImageSrc = getImageSrc(currentPokemon);
   const previousImageSrc = getImageSrc(previousPokemon);
 
   let image1Class, image2Class;
-  if(isFetchingImage) {
+  if(isChanging) {
     image1Class = showFirstImage ? classes.beforeRotateIn : classes.beforeRotateOut;
     image2Class = showFirstImage ? classes.beforeRotateOut : classes.beforeRotateIn;
   } else {
@@ -60,7 +58,18 @@ export function PokemonShowcaseCard({ delay }) {
   }
 
   useEffect(() => {
+    // Because pokemon is changing, the current
+    // pokemon will be the previous pokemon
+    setPreviousPokemon({ ...currentPokemon });
+    setCurrentPokemon({ ...pokemon });
     setShowFirstImage(previous => !previous);
+
+    setIsChanging(true);
+    const interval = setTimeout(() => {
+      setIsChanging(false);
+    }, 50);
+
+    return () => clearTimeout(interval);
   }, [pokemon]);
 
   return (
@@ -90,16 +99,13 @@ export function PokemonShowcaseCard({ delay }) {
         </div>
       </div>
       <Text align="center" transform="capitalize">
-        {pokemon.name}
+        {currentPokemon.name}
       </Text>
-      <Progress
+      <ProgressTimer
         radius="none"
-        value={isFetchingImage ? 0 : 100}
-        sx={{
-          '& [role=progressbar]': {
-            transition: `width ${isFetchingImage ? '0' : delay}ms linear`,
-          }
-        }}
+        value={isChanging ? 0 : 100}
+        start={!isChanging}
+        time={delay}
       />
     </Card>
   )
