@@ -8,7 +8,7 @@ import './App.css';
 
 export const context = createContext(true);
 
-function AppLayout() {
+export function AppLayout() {
 
   const [isUsingGameboyTheme, setIsUsingGameboyTheme] = useState(false);
 
@@ -25,7 +25,7 @@ function AppLayout() {
       <Helmet>
         <meta
           name="theme-color"
-          content={isUsingGameboyTheme ? gameboyTheme.white : defaultTheme.colors.pikachu[0]}
+          content={isUsingGameboyTheme ? gameboyTheme.white : defaultTheme.colors?.pikachu?.[0]}
         />
       </Helmet>
       <Container size="sm" pt="sm" sx={{height: '100vh'}}>
@@ -45,5 +45,3 @@ function AppLayout() {
     </MantineProvider>
   );
 }
-
-export default AppLayout

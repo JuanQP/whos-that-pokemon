@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 
-export function useTimer({ seconds }) {
+interface Props {
+  seconds: number;
+}
+
+export function useTimer({ seconds }: Props) {
   const [remainingTime, setRemainingTime] = useState(seconds);
   const [done, setDone] = useState(false);
 

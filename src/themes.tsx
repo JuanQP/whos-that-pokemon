@@ -1,9 +1,10 @@
 import gameboyBackgroundImageUrl from '@assets/pixel-pokeball-background.png';
 import backgroundImageUrl from '@assets/pokeball-background.png';
+import { MantineTheme, MantineThemeOverride, Tuple } from '@mantine/core';
 
 const GB_GREEN_BACKGROUND = '#C3CFA1';
 
-export const gameboyTheme = {
+export const gameboyTheme: MantineThemeOverride = {
   globalStyles: () => ({
     body: {
       backgroundImage: `url('${gameboyBackgroundImageUrl}')`,
@@ -19,8 +20,8 @@ export const gameboyTheme = {
     fontFamily: 'PokemonGb-RAeo',
   },
   colors: {
-    green: Array(10).fill('#729E07'),
-    gameboy: Array(10).fill(GB_GREEN_BACKGROUND),
+    green: Array<string>(10).fill('#729E07') as Tuple<string, 10>,
+    gameboy: Array<string>(10).fill(GB_GREEN_BACKGROUND) as Tuple<string, 10>,
   },
   components: {
     Title: {
@@ -43,7 +44,7 @@ export const gameboyTheme = {
         size: 'lg',
         radius: 'xs',
         variant: 'white',
-        sx: (theme) => ({
+        sx: (theme: MantineTheme) => ({
           '&[data-disabled]': {
             color: theme.colors.gray[7],
             backgroundColor: theme.colors.gray[6],
@@ -79,8 +80,8 @@ export const gameboyTheme = {
   }
 };
 
-export const defaultTheme = {
-  globalStyles: (theme) => ({
+export const defaultTheme: MantineThemeOverride = {
+  globalStyles: (theme: MantineTheme) => ({
     body: {
       backgroundColor: theme.colors.pikachu[0],
       backgroundImage: `url('${backgroundImageUrl}')`
@@ -90,7 +91,7 @@ export const defaultTheme = {
     },
   }),
   colors: {
-    pikachu: Array(10).fill('#f8d138'),
+    pikachu: ['#f8d138'],
   },
   components: {
     ActionIcon: {

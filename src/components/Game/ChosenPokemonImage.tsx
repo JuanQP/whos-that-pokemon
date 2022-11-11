@@ -21,12 +21,16 @@ const useStyles = createStyles(() => ({
 const CorrectOptionIcon = () => <IconCheck color="green" />;
 const IncorrectOptionIcon = () => <IconX color="red" />;
 
-export function ChosenPokemonImage({ pokemon, style }) {
+interface Props {
+  pokemon: PokemonOption;
+}
+
+export function ChosenPokemonImage({ pokemon }: Props) {
 
   const { classes } = useStyles();
 
   return (
-    <Box className={classes.box} style={style}>
+    <Box className={classes.box}>
       <BackgroundImage className={classes.image} src={getImageSrc(pokemon)}>
         {pokemon.isCorrectOption ? <CorrectOptionIcon /> : <IncorrectOptionIcon /> }
       </BackgroundImage>

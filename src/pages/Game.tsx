@@ -1,5 +1,4 @@
-import { usePokemonGame } from '@/hooks/usePokemonGame';
-import { useTimer } from '@/hooks/useTimer';
+import { usePokemonGame, useTimer } from '@/hooks';
 import { GAME_MODES, NULL_POKEMON } from '@/utils';
 import { OptionButton } from '@components/Game/OptionButton';
 import { PokemonCard } from '@components/Game/PokemonCard';
@@ -7,7 +6,7 @@ import { Button, Card, Grid, Text } from '@mantine/core';
 import { useEffect, useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
-const mockOptions = [
+const mockOptions: Pokemon[] = [
   {id: 1, name: "Option A"},
   {id: 2, name: "Option B"},
   {id: 3, name: "Option C"},
@@ -30,7 +29,7 @@ export function Game() {
     nextPokemon,
     selectOption,
   } = usePokemonGame({ gameMode });
-  const timeout = useRef(null);
+  const timeout = useRef<number>();
 
   useEffect(() => {
     if(gameStarted) {
@@ -42,19 +41,19 @@ export function Game() {
     if(pokemonToGuess.id === NULL_POKEMON.id || gameOver) return;
     // Reset timer and set null choice if choice time expires.
     clearTimeout(timeout.current);
-    timeout.current = setTimeout(() => {
+    timeout.current = window.setTimeout(() => {
       handlePokemonOptionClick({ ...NULL_POKEMON });
     }, gameMode.TIME_TO_CHOOSE);
 
     return () => clearTimeout(timeout.current);
   }, [pokemonToGuess]); // Run this when a random pokemon is picked
 
-  function handlePokemonOptionClick(selectedPokemon) {
+  function handlePokemonOptionClick(selectedPokemon: Pokemon) {
     selectOption(selectedPokemon);
     // Stop timer if Pokemon selected
     clearTimeout(timeout.current);
     // Next pokemon in NEXT_POKEMON_DELAY miliseconds.
-    timeout.current = setTimeout(nextPokemon, gameMode.NEXT_POKEMON_DELAY);
+    timeout.current = window.setTimeout(nextPokemon, gameMode.NEXT_POKEMON_DELAY);
   }
 
   return (

@@ -1,0 +1,3 @@
+interface GameModeScreenProps {
+  pickedOptions: PokemonOption[];
+}

@@ -1,7 +1,7 @@
 import { getImageSrc, NULL_POKEMON } from "@/utils";
+import { ProgressTimer } from "@components/UI";
 import { Card, createStyles, Image, Text } from "@mantine/core";
 import { useEffect, useState } from "react";
-import { ProgressTimer } from "../UI/ProgressTimer";
 
 const useStyles = createStyles(() => ({
   div: {
@@ -38,7 +38,12 @@ const useStyles = createStyles(() => ({
   }
 }));
 
-export function PokemonShowcaseCard({ pokemon, delay }) {
+interface Props {
+  pokemon: Pokemon;
+  delay: number;
+}
+
+export function PokemonShowcaseCard({ pokemon, delay }: Props) {
 
   const { classes } = useStyles();
   const [showFirstImage, setShowFirstImage] = useState(true);
@@ -82,7 +87,7 @@ export function PokemonShowcaseCard({ pokemon, delay }) {
               height={192}
               fit="contain"
               alt=" "
-              sx={classes.image}
+              className={classes.image}
             />
           </Card.Section>
         </div>
@@ -102,7 +107,7 @@ export function PokemonShowcaseCard({ pokemon, delay }) {
         {currentPokemon.name}
       </Text>
       <ProgressTimer
-        radius="none"
+        radius={0}
         value={isChanging ? 0 : 100}
         start={!isChanging}
         time={delay}

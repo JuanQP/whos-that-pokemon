@@ -1,17 +1,24 @@
-import { Progress } from "@mantine/core";
+import { Progress, ProgressProps } from "@mantine/core";
 import { useEffect, useState } from "react";
 
-export function ProgressTimer({ start, time, ...props }) {
+interface Props extends ProgressProps {
+  start: boolean;
+  time: number;
+}
+
+export function ProgressTimer({ start, time, ...props }: Props) {
 
   const [startTimer, setStartTimer] = useState(false);
 
   useEffect(() => {
     setStartTimer(false);
 
-    let timeout = null;
-    if(start) setTimeout(() => {
-      timeout = setStartTimer(true)
-    }, 50);
+    let timeout = 0;
+    if(start) {
+      timeout = window.setTimeout(() => {
+        setStartTimer(true)
+      }, 50);
+    }
 
     return () => clearTimeout(timeout);
   }, [start]);

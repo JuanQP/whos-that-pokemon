@@ -2,7 +2,12 @@ import { Button, Modal, Stack, Text } from "@mantine/core";
 import { IconPokeball } from "@tabler/icons";
 import { Link } from "react-router-dom";
 
-export function GameModeModal({ opened, onClose }) {
+interface Props {
+  opened: boolean;
+  onClose: () => void;
+}
+
+export function GameModeModal({ opened, onClose }: Props) {
   return (
     <Modal
       title="Select game mode"

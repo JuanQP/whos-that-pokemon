@@ -1,6 +1,6 @@
-import { usePokemonRandomizer } from "@/hooks/usePokemonRandomizer";
+import { usePokemonRandomizer } from "@/hooks";
 import { SECOND } from "@/utils";
-import POKEMONS from '@assets/pokemons.json';
+import { pokemons as POKEMONS } from '@assets/pokemons.json';
 import { GameModeModal } from "@components/Home/GameModeModal";
 import { PokemonShowcaseCard } from "@components/Home/PokemonShowcaseCard";
 import { Button, Card, Grid, Text } from "@mantine/core";
@@ -14,7 +14,10 @@ const NEXT_IMAGE_DELAY = 10 * SECOND;
 export function Home() {
 
   const [modalOpened, setOpenedModal] = useState(false);
-  const { pokemon, nextPokemon } = usePokemonRandomizer({ pokemons: POKEMONS });
+  const { pokemon, nextPokemon } = usePokemonRandomizer({
+    pokemons: POKEMONS,
+    deleteOnPick: false,
+  });
 
   useEffect(() => {
     nextPokemon();

@@ -1,17 +1,21 @@
+import { usePokemonRandomizer } from "@/hooks";
 import { NULL_POKEMON, pickOptions } from "@/utils";
-import POKEMONS from '@assets/pokemons.json';
+import { pokemons as POKEMONS } from '@assets/pokemons.json';
 import { useEffect, useState } from "react";
-import { usePokemonRandomizer } from "./usePokemonRandomizer";
 
-export function usePokemonGame({ gameMode }) {
+interface Props {
+  gameMode: GameMode;
+}
+
+export function usePokemonGame({ gameMode }: Props) {
   const {
     pokemon: pokemonToGuess,
     nextPokemon: nextRandomPokemon,
   } = usePokemonRandomizer({ pokemons: POKEMONS, deleteOnPick: gameMode.REMOVE_POKEMONS });
-  const [options, setOptions] = useState([]);
-  const [selected, setSelected] = useState(null);
+  const [options, setOptions] = useState<Pokemon[]>([]);
+  const [selected, setSelected] = useState<Pokemon | null>(null);
   const [gameOver, setGameOver] = useState(false);
-  const [pickedOptions, setPickedOptions] = useState([]);
+  const [pickedOptions, setPickedOptions] = useState<PokemonOption[]>([]);
 
   useEffect(() => {
     if(pokemonToGuess.id === NULL_POKEMON.id) return;
@@ -21,7 +25,7 @@ export function usePokemonGame({ gameMode }) {
     setOptions(newOptions);
   }, [pokemonToGuess]);
 
-  function selectOption(option) {
+  function selectOption(option: Pokemon) {
     const isCorrectOption = option.id === pokemonToGuess.id;
     const lastSelectedOption = {
       ...pokemonToGuess,

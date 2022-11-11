@@ -1,7 +1,7 @@
 import { GAME_MODES } from "@/utils";
 import { Card, Grid, Text } from "@mantine/core";
 
-export function PokemonMasterModeFinishedGame({ pickedOptions = [] }) {
+export function PokemonMasterModeFinishedGame({ pickedOptions = [] }: GameModeScreenProps) {
 
   const { TOTAL_ATTEMPTS } = GAME_MODES.PokemonMaster;
   const successCount = pickedOptions.filter(o => o.isCorrectOption).length;

@@ -1,4 +1,4 @@
-import AppLayout from "@components/UI/AppLayout";
+import { AppLayout } from "@components/UI";
 import { About } from "@pages/About";
 import { Game } from "@pages/Game";
 import { Home } from "@pages/Home";

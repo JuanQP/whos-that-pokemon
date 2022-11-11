@@ -3,7 +3,7 @@ import { ChosenPokemonImage } from "@components/Game/ChosenPokemonImage";
 import { Card, Grid, Text, Transition } from "@mantine/core";
 import { useEffect, useRef, useState } from "react";
 
-export function NormalModeFinishedGame({ pickedOptions = [] }) {
+export function NormalModeFinishedGame({ pickedOptions = [] }: GameModeScreenProps) {
 
   const { TOTAL_ATTEMPTS } = GAME_MODES.Normal;
   const [showOptions, setShowOptions] = useState(false);
@@ -11,10 +11,10 @@ export function NormalModeFinishedGame({ pickedOptions = [] }) {
   const resultsMessage = successCount === TOTAL_ATTEMPTS ?
     `Great! You have guessed all the ${TOTAL_ATTEMPTS} pokemons!`
     : `Game finished! You correctly answered ${successCount} out of ${TOTAL_ATTEMPTS} pokemons`
-  const timer = useRef(null);
+  const timer = useRef<number>();
 
   useEffect(() => {
-    timer.current = setTimeout(() => setShowOptions(true), 100);
+    timer.current = window.setTimeout(() => setShowOptions(true), 100);
 
     return () => clearTimeout(timer.current);
   }, []);

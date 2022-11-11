@@ -1,15 +1,31 @@
-import { context } from "@components/UI/AppLayout";
+import { context } from "@components/UI";
 import { Button } from "@mantine/core";
 import { useContext } from "react";
 
 const gradients = [
-  {from: 'blue', to: 'blue.3'},
-  {from: 'red', to: 'red.3'},
-  {from: 'green', to: 'green.3'},
-  {from: 'yellow', to: 'yellow.3'},
+  {from: 'blue', to: 'blue.3', deg: 45},
+  {from: 'red', to: 'red.3', deg: 45},
+  {from: 'green', to: 'green.3', deg: 45},
+  {from: 'yellow', to: 'yellow.3', deg: 45},
 ];
 
-export function OptionButton({ index, gameStarted, pokemonToGuess, selectedPokemon, pokemonOption, onClick }) {
+interface Props {
+  index: number;
+  gameStarted: boolean;
+  pokemonToGuess: Pokemon;
+  selectedPokemon: Pokemon | null;
+  pokemonOption: Pokemon;
+  onClick: (option: Pokemon) => void;
+}
+
+export function OptionButton({
+  index,
+  gameStarted,
+  pokemonToGuess,
+  selectedPokemon,
+  pokemonOption,
+  onClick
+}: Props) {
 
   const isUsingGameboyTheme = useContext(context);
   const isSelectedOption = pokemonOption.id === selectedPokemon?.id;
@@ -22,8 +38,8 @@ export function OptionButton({ index, gameStarted, pokemonToGuess, selectedPokem
       isUsingGameboyTheme ? undefined : 'gradient';
   const color =
     selectedPokemon && isCorrectOption ? 'green' :
-      isSelectedOption ? 'red' :
-        isUsingGameboyTheme ? undefined : gradients[index];
+      selectedPokemon && isSelectedOption ? 'red' : undefined;
+  const gradient = !isUsingGameboyTheme ? gradients[index] : undefined;
 
   return (
     <Button
@@ -32,7 +48,7 @@ export function OptionButton({ index, gameStarted, pokemonToGuess, selectedPokem
       disabled={disabled}
       variant={variant}
       color={color}
-      gradient={color}
+      gradient={gradient}
       onClick={() => onClick(pokemonOption)}
     >
       {pokemonOption.name}
