@@ -1,25 +1,34 @@
-import { useEffect, useState } from "react";
+import { SECOND } from "@/utils";
+import { useEffect, useRef, useState } from "react";
+import { useInterval } from "./useInterval";
 
-interface Props {
-  seconds: number;
-}
+export function useTimer(callback: () => void, seconds: number) {
 
-export function useTimer({ seconds }: Props) {
+  const savedCallback = useRef(() => {});
   const [remainingTime, setRemainingTime] = useState(seconds);
+  const [runInterval, setRunInterval] = useState(true);
   const [done, setDone] = useState(false);
 
+  // Keep always the last version of the callback
   useEffect(() => {
-    if(remainingTime === 0) {
+    savedCallback.current = callback;
+  });
+
+  useInterval(() => {
+    setRemainingTime(previous => previous - 1);
+  }, runInterval ? 1000 : null);
+
+  useEffect(() => {
+    if(seconds === null) return
+
+    const id = window.setTimeout(() => {
+      savedCallback.current();
       setDone(true);
-      return;
-    }
+      setRunInterval(false);
+    }, seconds * SECOND);
 
-    const timeout = setTimeout(() => {
-      setRemainingTime(previous => previous - 1);
-    }, 1000);
-
-    return () => clearTimeout(timeout);
-  }, [remainingTime]);
+    return () => clearTimeout(id);
+  }, [seconds]);
 
   return {
     remainingTime,

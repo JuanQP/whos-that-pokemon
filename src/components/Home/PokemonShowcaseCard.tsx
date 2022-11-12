@@ -48,7 +48,7 @@ export function PokemonShowcaseCard({ pokemon, delay }: Props) {
   const { classes } = useStyles();
   const [showFirstImage, setShowFirstImage] = useState(true);
   const [currentPokemon, setCurrentPokemon] = useState(NULL_POKEMON);
-  const [previousPokemon, setPreviousPokemon] = useState(NULL_POKEMON);
+  const [previousPokemon, setPreviousPokemon] = useState(pokemon);
   const [isChanging, setIsChanging] = useState(false);
   const pokemonImageSrc = getImageSrc(currentPokemon);
   const previousImageSrc = getImageSrc(previousPokemon);

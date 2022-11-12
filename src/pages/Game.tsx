@@ -12,47 +12,44 @@ const mockOptions: Pokemon[] = [
   {id: 3, name: "Option C"},
   {id: 4, name: "Option D"},
 ];
-
 const TIME_BEFORE_START = 5;
 
 export function Game() {
 
   const { mode } = useParams();
   const gameMode = mode === 'pokemon-master' ? GAME_MODES.PokemonMaster : GAME_MODES.Normal;
-  const { done: gameStarted, remainingTime } = useTimer({ seconds: TIME_BEFORE_START });
+  const { GameOverMessage } = gameMode;
+  const { done: gameStarted, remainingTime } = useTimer(() => {}, TIME_BEFORE_START);
   const {
     pokemonToGuess,
     options,
     gameOver,
-    pickedOptions,
+    guessings,
     selected,
     nextPokemon,
     selectOption,
-  } = usePokemonGame({ gameMode });
+  } = usePokemonGame({ gameMode, gameStarted });
   const timeout = useRef<number>();
 
   useEffect(() => {
-    if(gameStarted) {
-      nextPokemon();
-    }
-  }, [gameStarted]);
+    return () => window.clearTimeout(timeout.current);
+  }, []);
 
   useEffect(() => {
-    if(pokemonToGuess.id === NULL_POKEMON.id || gameOver) return;
-    // Reset timer and set null choice if choice time expires.
+    if(gameOver || !gameStarted) return;
+    // Now the user is playing
+    // Set null choice after TIME_TO_CHOOSE miliseconds
     clearTimeout(timeout.current);
     timeout.current = window.setTimeout(() => {
-      handlePokemonOptionClick({ ...NULL_POKEMON });
+      handleOptionClick({ ...NULL_POKEMON });
     }, gameMode.TIME_TO_CHOOSE);
+  }, [pokemonToGuess, gameOver, gameStarted]);
 
-    return () => clearTimeout(timeout.current);
-  }, [pokemonToGuess]); // Run this when a random pokemon is picked
-
-  function handlePokemonOptionClick(selectedPokemon: Pokemon) {
-    selectOption(selectedPokemon);
-    // Stop timer if Pokemon selected
+  function handleOptionClick(selectedPokemon: Pokemon) {
+    // Stop timer when a Pokemon is selected
     clearTimeout(timeout.current);
-    // Next pokemon in NEXT_POKEMON_DELAY miliseconds.
+    selectOption({ ...selectedPokemon });
+    // Next pokemon in NEXT_POKEMON_DELAY miliseconds...
     timeout.current = window.setTimeout(nextPokemon, gameMode.NEXT_POKEMON_DELAY);
   }
 
@@ -88,7 +85,7 @@ export function Game() {
                 pokemonOption={option}
                 pokemonToGuess={pokemonToGuess}
                 selectedPokemon={selected}
-                onClick={handlePokemonOptionClick}
+                onClick={handleOptionClick}
               />
             </Grid.Col>
           ))}
@@ -96,7 +93,7 @@ export function Game() {
       )}
       {gameOver && gameStarted && (
         <>
-          <gameMode.GameOverMessage pickedOptions={pickedOptions} />
+          <GameOverMessage guessings={guessings} />
           <Button fullWidth component={Link} to="/">
             Return to home
           </Button>

@@ -3,8 +3,10 @@ interface Pokemon {
   name: string;
   src?: string;
 }
-
-interface PokemonOption extends Pokemon {
+/**
+ * Stores information about a guessing attempt of a Pokemon
+ */
+interface PokemonGuessing extends Pokemon {
   isCorrectOption: boolean;
 }
 

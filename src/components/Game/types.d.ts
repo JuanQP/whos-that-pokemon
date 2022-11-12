@@ -1,3 +1,3 @@
 interface GameModeScreenProps {
-  pickedOptions: PokemonOption[];
+  guessings: PokemonGuessing[];
 }

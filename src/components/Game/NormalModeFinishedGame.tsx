@@ -3,11 +3,11 @@ import { ChosenPokemonImage } from "@components/Game/ChosenPokemonImage";
 import { Card, Grid, Text, Transition } from "@mantine/core";
 import { useEffect, useRef, useState } from "react";
 
-export function NormalModeFinishedGame({ pickedOptions = [] }: GameModeScreenProps) {
+export function NormalModeFinishedGame({ guessings = [] }: GameModeScreenProps) {
 
   const { TOTAL_ATTEMPTS } = GAME_MODES.Normal;
   const [showOptions, setShowOptions] = useState(false);
-  const successCount = pickedOptions.filter(o => o.isCorrectOption).length;
+  const successCount = guessings.filter(o => o.isCorrectOption).length;
   const resultsMessage = successCount === TOTAL_ATTEMPTS ?
     `Great! You have guessed all the ${TOTAL_ATTEMPTS} pokemons!`
     : `Game finished! You correctly answered ${successCount} out of ${TOTAL_ATTEMPTS} pokemons`
@@ -30,9 +30,9 @@ export function NormalModeFinishedGame({ pickedOptions = [] }: GameModeScreenPro
       <Grid.Col xs={12}>
         {/* Show pokemon images one next to each other */}
         <Grid justify="center">
-          {pickedOptions.map((pickedOption, i) => (
+          {guessings.map((pokemonGuess, i) => (
             <Grid.Col
-              key={`number${i}-id${pickedOption.id}`}
+              key={`number${i}-id${pokemonGuess.id}`}
               span="content"
               sx={{ minWidth: '160px' }}
             >
@@ -51,7 +51,7 @@ export function NormalModeFinishedGame({ pickedOptions = [] }: GameModeScreenPro
                       width: '160px'
                     }}
                   >
-                    <ChosenPokemonImage pokemon={pickedOption} />
+                    <ChosenPokemonImage pokemon={pokemonGuess} />
                   </Card>
                 )}
               </Transition>

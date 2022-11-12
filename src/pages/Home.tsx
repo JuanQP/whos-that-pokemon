@@ -1,11 +1,11 @@
-import { usePokemonRandomizer } from "@/hooks";
+import { useInterval, usePokemonRandomizer } from "@/hooks";
 import { SECOND } from "@/utils";
 import { pokemons as POKEMONS } from '@assets/pokemons.json';
 import { GameModeModal } from "@components/Home/GameModeModal";
 import { PokemonShowcaseCard } from "@components/Home/PokemonShowcaseCard";
 import { Button, Card, Grid, Text } from "@mantine/core";
 import { IconBrandGithub, IconInfoCircle, IconPokeball } from "@tabler/icons";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 
@@ -18,12 +18,7 @@ export function Home() {
     pokemons: POKEMONS,
     deleteOnPick: false,
   });
-
-  useEffect(() => {
-    nextPokemon();
-    const interval = setInterval(nextPokemon, NEXT_IMAGE_DELAY);
-    return () => clearInterval(interval);
-  }, []);
+  useInterval(nextPokemon, NEXT_IMAGE_DELAY);
 
   return (
     <Grid>

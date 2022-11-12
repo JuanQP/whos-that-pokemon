@@ -22,7 +22,7 @@ const CorrectOptionIcon = () => <IconCheck color="green" />;
 const IncorrectOptionIcon = () => <IconX color="red" />;
 
 interface Props {
-  pokemon: PokemonOption;
+  pokemon: PokemonGuessing;
 }
 
 export function ChosenPokemonImage({ pokemon }: Props) {
