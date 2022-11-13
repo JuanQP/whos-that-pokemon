@@ -10,6 +10,10 @@ interface PokemonGuessing extends Pokemon {
   isCorrectOption: boolean;
 }
 
+type GameModes = {
+  [key: string]: GameMode;
+}
+
 interface GameMode {
   TIME_TO_CHOOSE: number;
   NEXT_POKEMON_DELAY: number;

@@ -1,4 +1,4 @@
-import { getImageSrc } from "@/utils";
+import { getImageSrc } from "@/helpers";
 import whosThatPokemonBackgroundUrl from '@assets/whos-that-pokemon.png';
 import { context } from "@components/UI";
 import { ProgressTimer } from "@components/UI/ProgressTimer";

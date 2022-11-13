@@ -1,5 +1,5 @@
+import { pickOptions } from "@/helpers";
 import { usePokemonRandomizer } from "@/hooks";
-import { pickOptions } from "@/utils";
 import { pokemons as POKEMONS } from '@assets/pokemons.json';
 import { useEffect, useState } from "react";
 

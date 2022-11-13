@@ -1,4 +1,5 @@
-import { getImageSrc, NULL_POKEMON } from "@/utils";
+import { NULL_POKEMON } from "@/constants";
+import { getImageSrc } from "@/helpers";
 import { ProgressTimer } from "@components/UI";
 import { Card, createStyles, Image, Text } from "@mantine/core";
 import { useEffect, useState } from "react";

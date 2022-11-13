@@ -1,4 +1,4 @@
-import { SECOND } from "@/utils";
+import { SECOND } from "@/constants";
 import { useEffect, useRef, useState } from "react";
 import { useInterval } from "./useInterval";
 
@@ -16,7 +16,7 @@ export function useTimer(callback: () => void, seconds: number) {
 
   useInterval(() => {
     setRemainingTime(previous => previous - 1);
-  }, runInterval ? 1000 : null);
+  }, runInterval ? 1 * SECOND : null);
 
   useEffect(() => {
     if(seconds === null) return

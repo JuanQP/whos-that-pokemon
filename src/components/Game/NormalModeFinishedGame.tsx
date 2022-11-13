@@ -1,4 +1,4 @@
-import { GAME_MODES } from "@/utils";
+import { GAME_MODES } from "@/constants";
 import { ChosenPokemonImage } from "@components/Game/ChosenPokemonImage";
 import { Card, Grid, Text, Transition } from "@mantine/core";
 import { useEffect, useRef, useState } from "react";

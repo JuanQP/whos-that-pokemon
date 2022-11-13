@@ -1,5 +1,5 @@
+import { GAME_MODES, NULL_POKEMON, TIME_BEFORE_START } from '@/constants';
 import { usePokemonGame, useTimer } from '@/hooks';
-import { GAME_MODES, NULL_POKEMON } from '@/utils';
 import { OptionButton } from '@components/Game/OptionButton';
 import { PokemonCard } from '@components/Game/PokemonCard';
 import { Button, Card, Grid, Text } from '@mantine/core';
@@ -12,7 +12,6 @@ const mockOptions: Pokemon[] = [
   {id: 3, name: "Option C"},
   {id: 4, name: "Option D"},
 ];
-const TIME_BEFORE_START = 5;
 
 export function Game() {
 

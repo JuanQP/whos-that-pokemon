@@ -1,4 +1,4 @@
-import { pickRandomPokemon, randomNumber } from "@/utils";
+import { pickRandomPokemon, randomNumber } from "@/helpers";
 import { useRef, useState } from "react";
 
 interface Props {

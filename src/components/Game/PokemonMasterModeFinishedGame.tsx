@@ -1,4 +1,4 @@
-import { GAME_MODES } from "@/utils";
+import { GAME_MODES } from "@/constants";
 import { Card, Grid, Text } from "@mantine/core";
 
 export function PokemonMasterModeFinishedGame({ guessings = [] }: GameModeScreenProps) {

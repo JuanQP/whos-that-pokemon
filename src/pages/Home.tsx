@@ -1,5 +1,5 @@
+import { SECOND } from "@/constants";
 import { useInterval, usePokemonRandomizer } from "@/hooks";
-import { SECOND } from "@/utils";
 import { pokemons as POKEMONS } from '@assets/pokemons.json';
 import { GameModeModal } from "@components/Home/GameModeModal";
 import { PokemonShowcaseCard } from "@components/Home/PokemonShowcaseCard";
