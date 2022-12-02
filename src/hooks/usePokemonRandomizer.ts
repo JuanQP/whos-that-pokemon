@@ -16,6 +16,7 @@ export function usePokemonRandomizer({ pokemons, deleteOnPick }: Props) {
 
     const newRandomPokemon = pickRandomPokemon(remainingPokemons.current, deleteOnPick);
     setPokemon({ ...newRandomPokemon });
+    return newRandomPokemon
   }
 
   return { pokemon, nextPokemon };
