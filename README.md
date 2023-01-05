@@ -9,3 +9,12 @@ Click the magic button to have a more retro stylish theme 😝🕹️
 ![pokemon-preview-2-2](https://user-images.githubusercontent.com/11776905/197400854-d87b1ff8-77e4-477d-aebc-6c417547bbf5.gif)
 
 **Live demo here**: https://JuanQP.github.io/whos-that-pokemon
+
+# Development environment
+
+Run
+
+```sh
+docker build -t whos-that-pokemon .
+docker run -p 5173:5173 whos-that-pokemon
+```
