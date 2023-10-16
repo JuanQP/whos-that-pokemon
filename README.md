@@ -10,11 +10,19 @@ Click the magic button to have a more retro stylish theme 😝🕹️
 
 **Live demo here**: https://JuanQP.github.io/whos-that-pokemon
 
+# Run
+
+```sh
+docker compose up
+```
+
+Done. Project is running on http://localhost/whos-that-pokemon
+
 # Development environment
 
 Run
 
 ```sh
-docker build -t whos-that-pokemon .
-docker run -p 5173:5173 whos-that-pokemon
+npm install
+npm run dev
 ```

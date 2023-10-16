@@ -1,8 +1,10 @@
-FROM node:18-alpine
+FROM node:18-alpine as builder
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci
+RUN npm ci --include=dev
 COPY . .
-EXPOSE 5173
+RUN npm run build
 
-CMD npm run dev -- --host
+FROM nginx:1.25-alpine
+RUN mkdir -p /usr/share/nginx/html/whos-that-pokemon
+COPY --from=builder /app/dist /usr/share/nginx/html/whos-that-pokemon
